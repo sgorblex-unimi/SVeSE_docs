@@ -1,10 +1,17 @@
 \documentclass{report}
 \usepackage[italian]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{caption}
+
+\geometry{a4paper,top=2cm,bottom=3cm,left=3cm,right=3cm,heightrounded,bindingoffset=5mm}
+
 \begin{document}
 
-\title{RASD}
-\author{Edoardo D.R. - Alessandro C.L.}
-\date{Anno Accademico 21-22}
+\title{Requirements Analysis and Specification Document \\
+\large Sistema di Voto e Scrutinio Elettronico}
+\author{Alessandro Clerici Lorenzini, Edoardo Della Rossa}
+\date{Anno Accademico 2021-2022}
 \maketitle
 
 \tableofcontents
@@ -14,6 +21,16 @@
 \section{Destinatari}
 \section{Scopo del sistema}
 \section{Glossario (definizioni, acronimi e abbreviazioni)}
+\begin{description}
+	\item[Amministratore della Sessione di Voto] costruisce le schede e aggiunge i garanti;
+	\item[Elettore] avente diritto al voto;
+	\item[Garanti] enti che verificano la correttezza della Sessione di Voto e hanno accesso ai risultati;
+	\item[Responsabile di Seggio] responsabile che attivi e monitori il Sistema in un seggio fisico;
+	\item[Seggio (fisico)] luogo fisico dove l'elettore che decida di votare di persona esercita il suo diritto;
+	\item[Sessione di Voto] insieme di procedure che contribuiscono a finalizzare una consultazione tramite il Sistema.;
+	\item[Sistema] (S maiuscola) Sistema di Voto e Scrutinio Elettronico;
+	\item[Votante] elettore che esercita il diritto di voto.
+\end{description}
 
 
 \chapter{Introduzione}
