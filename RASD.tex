@@ -9,43 +9,96 @@
 \setcounter{secnumdepth}{3}
 
 
+
 \begin{document}
 
 \title{Requirements Analysis and Specification Document \\
 \large Sistema di Voto e Scrutinio Elettronico}
 \author{Alessandro Clerici Lorenzini, Edoardo Della Rossa}
 \date{Anno Accademico 2021-2022}
-\maketitle
 
+\maketitle
 \tableofcontents
 
+
+
+
+
+
 \chapter{Introduzione}
+
+
+
+
 \section{Obiettivi}
+
+
+
+
 \section{Destinatari}
+
+
+
+
 \section{Scopo del sistema}
-\section{Glossario (definizioni, acronimi e abbreviazioni)}
+
+
+
+
+\section{Glossario}
+
+
+\subsection{Persone e utenze}
 \begin{description}
-	\item[Amministratore della Sessione di Voto] costruisce le schede e aggiunge i garanti;
 	\item[Elettore] avente diritto al voto;
-	\item[Garanti] enti che verificano la correttezza della Sessione di Voto e hanno accesso ai risultati;
-	\item[Responsabile di Seggio] responsabile che attivi e monitori il Sistema in un seggio fisico;
-	\item[Scheda (Elettorale)] supporto digitale che contiene le possibili scelte di voto e registra le scelte del votante;
-	\item[Seggio (fisico)] luogo fisico dove l'elettore che decida di votare di persona esercita il suo diritto;
-	\item[Sessione di Voto] insieme di procedure che contribuiscono a finalizzare una consultazione tramite il Sistema.;
-	\item[Sistema] (S maiuscola) Sistema di Voto e Scrutinio Elettronico;
-	\item[Elezione]
-	\item[Consultazione]
-	\item[Suffragio]
 	\item[Votante] elettore che esercita il diritto di voto.
 \end{description}
 
+\subsubsection{Utenze di gestione}
+\begin{description}
+	\item[Amministratore della Sessione di Voto] utenza unica, costruisce le schede e aggiunge i garanti;
+	\item[Garanti (della Sessione di Voto)] enti che verificano la correttezza della Sessione di Voto e hanno accesso ai risultati;
+	\item[Responsabile di Seggio (Fisico)] responsabile che attivi e monitori il Sistema in un Seggio Fisico.
+\end{description}
 
-\chapter{Introduzione}
-\section{Descrizione generale}
+
+\subsection{Termini specifici}
+\begin{description}
+	\item[Scheda (Elettorale)] supporto digitale che contiene le possibili scelte di voto e registra le scelte del votante. Sostituisce la scheda elettorale cartacea fino al momento dell'invio del suffragio;
+	\item[Seggio Fisico] luogo fisico dove l'elettore che decida di votare di persona esercita il suo diritto; unico e predeterminato per elettore;
+	\item[Sessione di Voto] insieme di procedure che contribuiscono a finalizzare una consultazione tramite il Sistema, dall'apertura alla chiusura del voto da parte dell'Amministratore;
+	\item[Sistema (di Voto e Scrutinio Elettronico)] insieme degli applicativi software e hardware che gestiscono il procedimento di voto;
+	\item[Suffragio] scelta del votante conforme alle modalità dell'elezione.
+\end{description}
+
+
+
+
+
+
+\chapter{Descrizione generale}
+
+
+
+
 \section{Caratteristiche del prodotto}
+
+
+
+
 \section{Ambiente operativo}
+
+
+
+
 \section{Documentazione per l'utente}
+
+
+
+
 \section{Assunzioni, vincoli e dipendenze}
+
+
 
 
 
@@ -53,14 +106,12 @@
 \chapter{Specifica dei requisiti}
 
 
+
+
 \section{Requisiti funzionali}
 
-\subsection{Voto}
 
-\subsubsection{Diritto di voto}
-Ogni elettore deve poter esercitare il suo diritto al voto, ossia diventare votante. La possibilità di votare deve essere garantita dal Sistema sia di persona in un Seggio, sia da remoto via Internet.
-
-\subsubsection{Modalità di voto}
+\subsection{Modalità di voto}
 Le seguenti modalità di voto devono essere disponibili durante la creazione della scheda:
 \begin{description}
 	\item[Voto ordinale] all'elettore è richiesto di ordinare le scelte (candidati o gruppi) presenti nella scheda in base alle proprie preferenze;
@@ -71,11 +122,89 @@ Le seguenti modalità di voto devono essere disponibili durante la creazione del
 
 In tutte le modalità deve essere garantita la possibilità di astenersi.
 
+
+\subsection{Modalità di selezione del vincitore}
+La selezione del vincitore può avvenire secondo diverse modalità, impostate dall'Amministratore conformemente all'elezione.
+\begin{description}
+	\item[maggioranza] il vincitore è il candidato che ha ottenuto il maggior numero di voti;
+	\item[maggioranza assoluta] il vincitore è il candidato che ha ottenuto la maggioranza assoluta dei voti, cioè il 50\% + 1 dei voti espressi;
+	\item[referendum senza quorum] si procede al conteggio dei voti indipendentemente se abbia partecipato o meno alla consultazione la maggioranza degli aventi diritto al voto; 
+	\item[referendum con quorum] si procede al conteggio dei voti espressi solo nel caso in cui abbia partecipato alla consultazione la maggioranza degli aventi diritto al voto.
+\end{description}
+
+
+\subsection{Certificazione della Sessione di Voto}
+Un organismo indipendente opportunamente nominato deve verificare la validità e il funzionamento del sistema prima che esso entri in funzione
+
+
+\subsection{User stories}
+
+\subsubsection{Elettore}
+Come elettore devo poter...
+\begin{itemize}
+	\item poter votare on-line;
+	\item poter votare di persona (sapendo in che seggio).
+\end{itemize}
+
+\subsubsection{Votante}
+Come votante devo poter...
+\begin{itemize}
+	\item poter contare sull'anonimia e segretezza del mio voto;
+	\item poter selezionare in modo facile le mie preferenze secondo la modalità di voto della/e scheda/e.
+\end{itemize}
+
+\subsubsection{Amministratore della Sessione di Voto}
+Come Amministratore della Sessione di Voto devo poter...
+\begin{itemize}
+	\item aggiungere schede con le varie modalità e scelte per ogni scheda;
+	\item avviare e fermare la Sessione di Voto (+ sospensioni);
+	\item consultare i risultati delle elezioni.
+\end{itemize}
+
+\subsubsection{Garante}
+Come Garante della Sessione di Voto devo poter...
+\begin{itemize}
+	\item verificare le schede e la lista dei garanti prima dell'avvio della Sessione di Voto;
+	\item consultare i risultati delle elezioni.
+\end{itemize}
+
+\subsubsection{Responsabile di Seggio}
+Come Responsabile di Seggio devo poter...
+\begin{itemize}
+	\item dopo l'identificazione, la postazione per i singoli votanti;
+	\item verificare l'avvenuto voto di ciascun votante (senza ovviamente vederne il contenuto).
+\end{itemize}
+
+
+
+
+\section{Requisiti di interfacce esterne}
+
+
+\subsection{Interfacce utente}
+
+
+\subsection{Interfacce hardware}
+
+
+\subsection{Interfacce di comunicazione}
+
+
+
+
+\section{Requisiti non funzionali}
+
+
+\subsection{Voto}
+
+\subsubsection{Diritto di voto}
+Ogni elettore deve poter esercitare il suo diritto al voto, ossia diventare votante. La possibilità di votare deve essere garantita dal Sistema sia di persona in un Seggio Fisico, sia da remoto via Internet.
+
 \subsubsection{Anonimato del voto}
-Per nessun motivo deve essere possibile collegare identità e suffragio espresso. È compito del Sistema utilizzare le tecnologie adatte a garantirlo.
+In nessun modo deve essere possibile collegare un suffragio con l'identità che l'ha espresso.
 
 \subsubsection{Segretezza del voto}
-Il voto espresso dal votante deve rimanere segreto fino al momento dello scrutinio, quando però è già anonimo. (TODO Mettiamo cross-reference di requisiti?)
+In nessun modo deve essere possibile collegare un elettore con il suffragio che ha espresso.
 
 \subsubsection{Imparzialità del sistema}
 Il Sistema non deve influenzare in alcun modo la decisione del votante.
@@ -85,98 +214,51 @@ Ogni elettore può votare una e una sola volta per consultazione.
 
 \subsubsection{Regole sull'espressione del voto}
 \begin{enumerate}
-	\item Il votante può accedere solo alle schede per le elezioni in cui gode dell'elettorato attivo.
-	\item Il votante può esprimere sono un voto valido (eventualmente esprimendo più votazioni se le modalità lo richiedono) oppure può astenersi. Non è consentito esprimere un voto nullo.
-	\item Il votante deve poter verificare tramite l'interfaccia grafica che il voto espresso sia coerente con la propria volontà (per evitare errori inconsapevoli), dopodichè poterlo confermare e ricevere u nmessaggio di conferma.
-	\item Il Sistema non deve fornire alcuna prova del contenuto del suffragio dopo la conferma dello stesso, per evitare ogni possibile utilizzo illecito anche per conto terzi.
+	\item Il votante può accedere solo alle schede per le elezioni in cui gode dell'elettorato attivo;
+	\item Il votante può esprimere solo un voto valido (eventualmente esprimendo più votazioni se le modalità lo richiedono) oppure può astenersi. Non è consentito esprimere un voto nullo;
+	\item Il votante deve poter verificare tramite l'interfaccia grafica che il voto espresso sia coerente con la propria volontà (per evitare errori inconsapevoli), dopodiché poterlo confermare e ricevere un messaggio di avvenuto suffragio;
+	\item Il Sistema non deve fornire alcuna prova del contenuto del suffragio dopo la conferma dello stesso, ai fini di evitare ogni possibile utilizzo illecito anche per conto terzi.
 \end{enumerate}
 
 \subsubsection{Raccolta dei voti}
-Dopo la votazione del singolo, i voti devono pervenire all'urna del sistema centrale senza alterazioni. Devono essere previste una serie di tecnologie sia per evitare alterazioni, sia per evitare che il voto venga perso durante il trasferimento. 
-All'interno dell'urna centrale il voto è memorizzato insieme a informazioni come istante di voto e provenienza, che devono essere eliminate al momento dello scrutinio insieme ad ogni altra informazione che rendere il voto tracciabile, fatta eccezione di 2 informazioni specifiche sulla provenienza: seggio e informazioni su voto fisico/online.
-
-\subsection{Requisiti da smistare}
-\begin{itemize}
-	\item il voto dev'essere segreto - DONE
-	\item il Sistema non deve influenzare la decisione del votante - DONE
-	\item il voto espresso deve essere anonimo - DONE
-	\item ogni elettore può votare una volta sola per consultazione - DONE
-	\item il votante può accedere solo alle schede per le elezioni in cui gode dell'elettorato attivo - DONE
-	\item per ogni scheda è ammesso un solo voto valido e la possibilità di astenersi - DONE
-	\item l'elettore deve poter verificare tramite l'interfaccia grafica che il voto espresso sia coerente con la propria volontà, e dopodiché poterlo confermare e ricevere un messaggio di conferma - DONE
-	\item il voto deve pervenire all'urna del sistema centrale senza alterazioni - DONE
-	\item prima dello scrutinio i voti devono essere privati di ogni traccia dell'istante di voto o della provenienza - DONE
-	\item il conteggio avviene solo dopo la chiusura della Sessione di Voto
-	\item il sistema non dovrebbe fornire al votante la prova del contenuto del suffragio una volta esso confermato
-	\item in caso di malfunzionamento l'elettore deve essere immediatamente messo al corrente consentendo appena possibile la ripresa del procedimento di voto (se necessario dopo nuova autenticazione) - DONE
-	\item un organismo indipendente opportunamente nominato deve verificare la validità e il funzionamento del sistema prima che esso entri in funzione
-	\item il Sistema deve essere conforme alle \textit{Linee  guida  per  la  sperimentazione  di  modalità  di  espressione  del  voto  in  via digitale} pubblicate dal Ministero dell'Interno il 25 maggio 2021
-\end{itemize}
+Dopo l'espressione del singolo suffragio, il voto deve pervenire all'urna del sistema centrale senza alterazioni. Il conteggio avviene solo dopo la chiusura della Sessione di Voto.
 
 
-\subsection{Modalità di selezione del vincitore}
-	maggioranza: il vincitore è il candidato che ha ottenuto il maggior numero di voti;
-	maggioranza assoluta: il vincitore è il candidato che ha ottenuto la maggioranza assoluta dei voti, cioè il 50\% + 1 dei voti espressi;
-	referendum senza quorum: si procede al conteggio dei voti indipendentemente se abbia partecipato o meno alla consultazione la maggioranza degli aventi diritto al voto; 
-	referendum con quorum: si procede al conteggio dei voti espressi solo nel caso in cui abbia partecipato alla consultazione la maggioranza degli aventi diritto al voto.
+\subsection{Attinenza alle specifiche ufficiali dello Stato}
+Il Sistema deve essere conforme alle \textit{Linee  guida  per  la  sperimentazione  di  modalità  di  espressione  del  voto  in  via digitale} pubblicate dal Ministero dell'Interno il 25 maggio 2021
 
 
-\subsection{User stories}
-
-\subsubsection{Elettore}
-\begin{itemize}
-	\item poter votare in modo anonimo e segreto
-	\item poter votare di persona (sapendo in che seggio) 
-\end{itemize}
-\subsubsection{Votante}
-\begin{itemize}
-	\item poter selezionare in modo facile le mie preferenze secondo la modalità di voto della/e scheda/e
-\end{itemize}
-\subsubsection{Amministratore della Sessione di Voto}
-\begin{itemize}
-	\item aggiungere schede con le varie modalità e scelte per ogni scheda
-	\item avviare e fermare la Sessione di Voto (+ sospensioni)
-	\item consultare i risultati delle elezioni
-\end{itemize}
-\subsubsection{Garante}
-\begin{itemize}
-	\item verificare le schede e la lista dei garanti prima dell'avvio della Sessione di Voto
-	\item consultare i risultati delle elezioni
-\end{itemize}
-\subsubsection{Responsabile di Seggio}
-\begin{itemize}
-	\item identifica i votanti del proprio seggio fisico
-	\item dopo l'autenticazione abilita la postazione per i singoli votanti
-	\item verifica l'avvenuto voto di ciascun votante (ovviamente senza vederne il contenuto)
-\end{itemize}
-
-
-
-\section{Requisiti di interfacce esterne}
-
-\subsection{Interfacce utente}
-\subsection{Interfacce hardware}
-\subsection{Interfacce di comunicazione}
-\section{Requisiti non funzionali}
 \subsection{Requisiti di prestazione}
+
+
 \subsection{Attributi di qualità del software}
 
 
 \subsection{Requisiti di sicurezza}
 
 \subsubsection{Autenticazione delle utenze di gestione}
-Ogni utente di gestione, ovvero amministratore di sessione di voto, garante e responsabile del seggio, deve autenticarsi presso il sistema prima di accederci, per permettere l'implementazione di meccanismi efficaci di access control. 
+Ogni utente di gestione, ovvero Amministratore, Garante o Responsabile di Seggio, deve autenticarsi presso il Sistema prima di accedervi, al fine di permettere l'implementazione di meccanismi efficaci di access control. 
+
 Non ci sono vincoli sullo specifico metodo di autenticazione utilizzato: potranno essere utilizzati dei sistemi di identità digitale pubblici, così come un sistema utente/password opportunamente configurato.
 
 \subsubsection{Autenticazione degli elettori}
-Per garantire l'autenticità dei dati raccolti, è fondamentale che un elettore si identifichi. Il Sistema deve prevedere un sistema di autenticazione per consentire solamente agli elettori la possibilità di votare.
-Questa autenticazione deve essere fatta sia on-line tramite un sistema analogo a quello per l'autenticazione delle utenze di gestione, sia fisicamente utilizzando un sistema analogo a quello già esistente, e quindi che prevede la presentazione di un documento d'identità.
+Ai fini di garantire l'autenticità dei dati raccolti, è fondamentale che ogni elettore si identifichi. Il Sistema deve prevedere un sistema di autenticazione per consentire solamente agli elettori la possibilità di votare (e solo una volta).
+
+On-line l'autenticazione avviene tramite un sistema analogo a quello per l'autenticazione delle utenze di gestione. Nei seggi fisici l'autenticazione avviene tramite la presentazione di un documento d'identità.
 
 \subsubsection{Availability e malfunzionamenti}
 Il sistema deve essere sviluppato con un'attenzione particolare nei confronti dell'availability. Se il Sistema ha un interruzione momentanea nel funzionamento, deve informare immediatamente il votante, e bloccare le procedure di voto, riprendendole successivamente nel caso dopo aver ripetuto la procedura di identificazione.
 
 \subsubsection{Privacy}
-Ogni informazione sensibile che che viene memorizzata deve essere trattata secondo le direttive e le norme vigenti.  
+Ogni informazione sensibile che che viene memorizzata deve essere trattata secondo le direttive e le norme vigenti. Sul dispositivo usato non deve comunque rimanere alcuna traccia del contenuto del suffragio espresso.
+
+\subsubsection{Auditing}
+Ai fini di mantenere il maggior livello di sicurezza possibile, opportuni sistemi di auditing (log) devono essere forniti, i quali non devono comunque contenere il contenuto dei suffragi.
+
+
+
+
+
 
 \chapter{Appendice}
 
