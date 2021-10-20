@@ -108,7 +108,7 @@ All'interno dell'urna centrale il voto è memorizzato insieme a informazioni com
 	\item prima dello scrutinio i voti devono essere privati di ogni traccia dell'istante di voto o della provenienza - DONE
 	\item il conteggio avviene solo dopo la chiusura della Sessione di Voto
 	\item il sistema non dovrebbe fornire al votante la prova del contenuto del suffragio una volta esso confermato
-	\item in caso di malfunzionamento l'elettore deve essere immediatamente messo al corrente consentendo appena possibile la ripresa del procedimento di voto (se necessario dopo nuova autenticazione)
+	\item in caso di malfunzionamento l'elettore deve essere immediatamente messo al corrente consentendo appena possibile la ripresa del procedimento di voto (se necessario dopo nuova autenticazione) - DONE
 	\item un organismo indipendente opportunamente nominato deve verificare la validità e il funzionamento del sistema prima che esso entri in funzione
 	\item il Sistema deve essere conforme alle \textit{Linee  guida  per  la  sperimentazione  di  modalità  di  espressione  del  voto  in  via digitale} pubblicate dal Ministero dell'Interno il 25 maggio 2021
 \end{itemize}
@@ -160,7 +160,23 @@ All'interno dell'urna centrale il voto è memorizzato insieme a informazioni com
 \section{Requisiti non funzionali}
 \subsection{Requisiti di prestazione}
 \subsection{Attributi di qualità del software}
+
+
 \subsection{Requisiti di sicurezza}
+
+\subsubsection{Autenticazione delle utenze di gestione}
+Ogni utente di gestione, ovvero amministratore di sessione di voto, garante e responsabile del seggio, deve autenticarsi presso il sistema prima di accederci, per permettere l'implementazione di meccanismi efficaci di access control. 
+Non ci sono vincoli sullo specifico metodo di autenticazione utilizzato: potranno essere utilizzati dei sistemi di identità digitale pubblici, così come un sistema utente/password opportunamente configurato.
+
+\subsubsection{Autenticazione degli elettori}
+Per garantire l'autenticità dei dati raccolti, è fondamentale che un elettore si identifichi. Il Sistema deve prevedere un sistema di autenticazione per consentire solamente agli elettori la possibilità di votare.
+Questa autenticazione deve essere fatta sia on-line tramite un sistema analogo a quello per l'autenticazione delle utenze di gestione, sia fisicamente utilizzando un sistema analogo a quello già esistente, e quindi che prevede la presentazione di un documento d'identità.
+
+\subsubsection{Availability e malfunzionamenti}
+Il sistema deve essere sviluppato con un'attenzione particolare nei confronti dell'availability. Se il Sistema ha un interruzione momentanea nel funzionamento, deve informare immediatamente il votante, e bloccare le procedure di voto, riprendendole successivamente nel caso dopo aver ripetuto la procedura di identificazione.
+
+\subsubsection{Privacy}
+Ogni informazione sensibile che che viene memorizzata deve essere trattata secondo le direttive e le norme vigenti.  
 
 \chapter{Appendice}
 
