@@ -75,19 +75,19 @@
 
 
 \chapter{Descrizione generale}
-Il sistema di voto e scrutinio elettronico del quale in seguito di presentano i requisiti ha come obiettivo quello di permettere il corretto svolgimento di elezioni, anche di tipo diverso tra loro, sia con votazione remota, sia con votazione presso un seggio fisico.
-Analogamente alle elezioni "tradizionali", e seguendo le \textit{direttive ministeriali},
-% (TODO aggiungere link)
-il sistema è progettato per garantire le proprietà fondamentali del voto (come segretezza e anonimato) e per rispettare tutte le relative normative riguardanti il trattamento di informazioni sensibili. 
-Oltre a queste proprietà, il sistema fornisce anche la possibilità di inserire delle utenze speciali, chiamate garanti, pensate per verificare e controllare che l'amministrazione elettorale sia corretta e trasparente. 
-\par
+Il Sistema di Voto e Scrutinio Elettronico, del quale in seguito si presentano i requisiti, ha come obiettivo quello di permettere il corretto svolgimento di elezioni, anche di tipo diverso tra loro, sia con votazione remota, sia con votazione presso un seggio fisico.
 
-Dal punto di vista della fruibilità, oltre che un interfaccia chiara e comprensibile, adatta all'utilizzo anche da parte dei meno esperti, non sono previste modifiche al processo di voto nei seggi fisici.
-L'unico cambiamento effettuato, è il suppororto fisico delle schede, che diventa digitale per permettere una raccolta unica dei voti e uno scrutinio immediato.
-In questo modo, l'amministratore della sessione di voto è in grado di consultare immediatamente i risultati. Anche i garanti hanno accesso ai risultati, per verificare che non vengano comunicati in modo alterato dall'amministratore della sessione di voto.
-\par
-Il Sistema garantisce diverse modalità di voto (voto ordinale, categorico, categorico con preferenze e referendum) e diverse modalità con cui viene selezionato il vincitore (maggioranza, maggioranza assoluta, referendum senza quorum, referendum con quorum).
-Dal punto di vista della cybersecurity, il Sistema è progettato in modo da garantire che tutti i vincoli sulla sicurezza di voti e informazioni sensibili venga garantito tramite tecnologie apposite.
+Analogamente alle elezioni "tradizionali", e in conformità con le \href{https://www.interno.gov.it/sites/default/files/2021-07/linee_guida_voto_elettronico_decreto_9.7.2021.pdf}{direttive ministeriali}, il Sistema è progettato per garantire le proprietà fondamentali del voto (come segretezza e anonimato) e per rispettare le normative vigenti riguardanti il trattamento di informazioni sensibili. 
+
+Oltre a queste proprietà, il Sistema fornisce anche la possibilità di inserire delle utenze speciali, chiamate Garanti, pensate per verificare e controllare che l'amministrazione elettorale sia corretta e trasparente. 
+
+Dal punto di vista della fruibilità, è fornita per il voto on-line un'interfaccia chiara e comprensibile, adatta all'utilizzo anche da parte dei meno esperti. Non sono previste modifiche al processo di voto nei seggi fisici dal punto di vista del Votante, con l'unica eccezione della mancanza del supporto fisico delle schede, che sono digitali al fine di permettere una raccolta unica dei voti e uno scrutinio immediato.
+
+Anche grazie a ciò, l'Amministratore della Sessione di Voto è in grado di consultare immediatamente i risultati a Sessione conclusa. Anche i Garanti hanno accesso ai risultati, per verificare che non vengano comunicati in modo alterato dall'Amministratore.
+
+Il Sistema garantisce la possibilità di scegliere diverse modalità di voto (voto ordinale, categorico, categorico con preferenze e referendum) e diverse modalità di selezione del vincitore (maggioranza, maggioranza assoluta, referendum senza quorum, referendum con quorum).
+
+Dal punto di vista della cybersecurity, il Sistema è progettato in modo da garantire che tutti i vincoli sulla sicurezza di voti e delle informazioni sensibili vengano garantiti tramite tecnologie apposite.
 
 
 \section{Caratteristiche del prodotto}
@@ -119,19 +119,21 @@ Dal punto di vista della cybersecurity, il Sistema è progettato in modo da gara
 
 \section{Requisiti funzionali}
 
+
 \subsection{Amministratore della Sessione di Voto}
 L'Amministratore della Sessione di Voto si occupa di aggiungere i Garanti (predeterminati con meccanismi esterni al Sistema) e di costruire le schede elettorali previste per la consultazione.
 
-Una volta ricevuta la verifica da parte dei Garanti, l'Amministratore può dare il via alla Sessione di Voto, durante la quale gli elettori possono esprimere i rispettivi suffragi. L'amministratore inserisce nel sistema i dettagli sulla Sessione di Voto, compresa la sua durata. Quest'ultima è regolata da un timer allo scadere del quale la Sessione è conclusa.
+Una volta ricevuta la verifica da parte dei Garanti, l'Amministratore può dare il via alla Sessione di Voto, durante la quale gli elettori possono esprimere i rispettivi suffragi. L'amministratore inserisce nel sistema i dettagli sulla Sessione di Voto, tra cui la sua durata o la sua scadenza. Tale caratteristica temporale è gestita dal Sistema in modo automatico, che conclude la Sessione quando opportuno.
 
 L'amministratore ha la facoltà di sospendere la Sessione qualora una situazione eccezionale lo richieda. Eventuali richieste di sospensione sono inviate all'Amministratore dai Responsabili di Seggio. Durante una sospensione l'Amministratore ha facoltà di terminare definitivamente la Sessione, tuttavia tale procedimento è da intendersi eccezionale.
+
 
 \subsection{Garanti}
 I Garanti si occupano di assicurare che l'amministrazione elettorale sia corretta e trasparente.
 
-Prima dell'inizio della sessione hanno il compito di controllare che l'Amministratore abbia impostato correttamente i parametri della Sessione di Voto e che le nomine dei garanti siano coerenti con quanto stabilito dai regolamenti.
+Prima dell'inizio della Sessione i Garanti hanno il compito di verificare che l'Amministratore abbia impostato correttamente i parametri della Sessione di Voto e che le nomine dei Garanti siano coerenti con quanto stabilito dai regolamenti.
 
-Alla fine della sessione hanno il diritto di consultare i risultati per verificarne la proclamazione, e hanno libero accesso ai dati di monitoraggio per garantire che non ci siano stati malfunzionamenti.
+Alla fine della sessione i Garanti hanno il diritto di consultare i risultati per verificarne la proclamazione, e hanno libero accesso ai dati di monitoraggio al fine di garantire che non ci siano stati malfunzionamenti.
 
 
 \subsection{Modalità di voto}
