@@ -119,6 +119,13 @@ Dal punto di vista della cybersecurity, il Sistema è progettato in modo da gara
 
 \section{Requisiti funzionali}
 
+\subsection{Amministratore della Sessione di Voto}
+L'Amministratore della Sessione di Voto si occupa di aggiungere i Garanti (predeterminati con meccanismi esterni al Sistema) e di costruire le schede elettorali previste per la consultazione.
+
+Una volta ricevuta la verifica da parte dei Garanti, l'Amministratore può dare il via alla Sessione di Voto, durante la quale gli elettori possono esprimere i rispettivi suffragi. L'amministratore inserisce nel sistema i dettagli sulla Sessione di Voto, compresa la sua durata. Quest'ultima è regolata da un timer allo scadere del quale la Sessione è conclusa.
+
+L'amministratore ha la facoltà di sospendere la Sessione qualora una situazione eccezionale lo richieda. Eventuali richieste di sospensione sono inviate all'Amministratore dai Responsabili di Seggio. Durante una sospensione l'Amministratore ha facoltà di terminare definitivamente la Sessione, tuttavia tale procedimento è da intendersi eccezionale.
+
 
 \subsection{Modalità di voto}
 Le seguenti modalità di voto devono essere disponibili durante la creazione della scheda:
