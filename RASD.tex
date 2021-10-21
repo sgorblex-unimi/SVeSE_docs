@@ -4,6 +4,7 @@
 \usepackage{caption}
 \usepackage{geometry}
 \usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
 
 \geometry{a4paper,top=2cm,bottom=3cm,left=3cm,right=3cm,heightrounded,bindingoffset=5mm}
 \setcounter{secnumdepth}{3}
@@ -73,12 +74,20 @@
 
 
 
-
-
-
 \chapter{Descrizione generale}
+Il sistema di voto e scrutinio elettronico del quale in seguito di presentano i requisiti ha come obiettivo quello di permettere il corretto svolgimento di elezioni, anche di tipo diverso tra loro, sia con votazione remota, sia con votazione presso un seggio fisico.
+Analogamente alle elezioni "tradizionali", e seguendo le \textit{direttive ministeriali},
+% (TODO aggiungere link)
+il sistema è progettato per garantire le proprietà fondamentali del voto (come segretezza e anonimato) e per rispettare tutte le relative normative riguardanti il trattamento di informazioni sensibili. 
+Oltre a queste proprietà, il sistema fornisce anche la possibilità di inserire delle utenze speciali, chiamate garanti, pensate per verificare e controllare che l'amministrazione elettorale sia corretta e trasparente. 
+\par
 
-
+Dal punto di vista della fruibilità, oltre che un interfaccia chiara e comprensibile, adatta all'utilizzo anche da parte dei meno esperti, non sono previste modifiche al processo di voto nei seggi fisici.
+L'unico cambiamento effettuato, è il suppororto fisico delle schede, che diventa digitale per permettere una raccolta unica dei voti e uno scrutinio immediato.
+In questo modo, l'amministratore della sessione di voto è in grado di consultare immediatamente i risultati. Anche i garanti hanno accesso ai risultati, per verificare che non vengano comunicati in modo alterato dall'amministratore della sessione di voto.
+\par
+Il Sistema garantisce diverse modalità di voto (voto ordinale, categorico, categorico con preferenze e referendum) e diverse modalità con cui viene selezionato il vincitore (maggioranza, maggioranza assoluta, referendum senza quorum, referendum con quorum).
+Dal punto di vista della cybersecurity, il Sistema è progettato in modo da garantire che tutti i vincoli sulla sicurezza di voti e informazioni sensibili venga garantito tramite tecnologie apposite.
 
 
 \section{Caratteristiche del prodotto}
