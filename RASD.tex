@@ -135,18 +135,30 @@ Prima dell'inizio della Sessione i Garanti hanno il compito di verificare che l'
 
 Alla fine della sessione i Garanti hanno il diritto di consultare i risultati per verificarne la proclamazione, e hanno libero accesso ai dati di monitoraggio al fine di garantire che non ci siano stati malfunzionamenti.
 
+
 \subsection{Responsabile di Seggio}
 Il responsabile di Seggio si occupa di gestire le consultazioni in presenza. 
 
-All'inizio della sessione di voto si autentica presso il pc centrale del seggio, dal quale è in grado di monitorare la situazione all'interno del seggio. Durante la sessione, si occupa di identificare i votanti e di abilitare le postazioni di voto per permettere ai votanti di votare senza dover ripetere l'autenticazione.
+All'inizio della sessione di voto il Responsabile di Seggio si autentica presso la macchina della propria postazione, dalla quale è in grado di monitorare la situazione all'interno del Seggio.
 
-All'interno della procedura di voto, il suo ruolo è abilitare la postazione di voto e verificare che il votante abbia confermato ed inviato la scheda prima di abbandonare il seggio.
+Durante la Sessione, il Responsabile di Seggio identifica i votanti e abilita le postazioni di voto per permettere ad essi di esprimere il proprio suffragio senza dover ripetere l'autenticazione.
+
+Il Responsabile di Seggio verifica che ogni votante abbia confermato ed inviato la scheda prima di abbandonare il seggio.
+
+Qualora situazioni eccezionali, ad esempio di minaccia alla sicurezza, dovessero presentarsi, il Responsabile di Seggio ha la facoltà di notificare l'Amministratore della Sessione di Voto e richiedere eventualmente la sospensione della consultazione presso il proprio Seggio Fisico. Solo l'amministratore può confermare tale sospensione.
 
 
 \subsection{Votanti}
 Il votante che decida di votare on-line accede all'interfaccia del sistema tramite un portale pubblicizzato opportunamente dagli enti ufficiali. L'interfaccia offre innanzitutto una schermata di autenticazione. Il votante autenticato, a meno che abbia già votato, accede alle schede elettorali della consultazione corrente e le compila secondo le modalità previste dalle elezioni. Il votante conferma (o annulla) una schermata riassuntiva della sua scelta, quindi riceve una conferma di avvenuto suffragio, la cui non contiene la prova del relativo contenuto.
 
 Il votante che decida di votare di persona in un Seggio Fisico si reca nel seggio assegnatogli dalle normative vigenti, quindi viene identificato (dopo eventuali verifiche preliminari di accettazione) dal Responsabile di Seggio. Quest'ultimo indica al votante la postazione da cui effettuare il suffragio, che avviene in modalità del tutto analoghe a quelle on-line, ad eccezione della procedura di autenticazione, che è appunto sostituita da quella fisica.
+
+
+\subsection{Risultati}
+I risultati sono calcolati automaticamente dal Sistema previa chiusura della Sessione di Voto secondo le modalità previste dalle elezioni e sono consultabili dall'Amministratore e dai Garanti.
+
+I risultati contengono il nome dei vincitori, il conteggio dei voti per candidato o gruppo e dati in forma aggregata in funzione dell'area geografica (basata sul seggio assegnato) e dello stato fisico o on-line dei suffragi. Sono anche presenti dati sull'affluenza alla consultazione.
+
 
 
 \subsection{Modalità di voto}
@@ -171,24 +183,20 @@ La selezione del vincitore può avvenire secondo diverse modalità, impostate da
 \end{description}
 
 
-\subsection{Certificazione della Sessione di Voto}
-Un organismo indipendente opportunamente nominato deve verificare la validità e il funzionamento del sistema prima che esso entri in funzione
-
-
 \subsection{User stories}
 
 \subsubsection{Elettore}
 Come elettore devo poter...
 \begin{itemize}
-	\item poter votare on-line;
-	\item poter votare di persona (sapendo in che seggio).
+	\item votare on-line;
+	\item votare di persona (sapendo in che seggio).
 \end{itemize}
 
 \subsubsection{Votante}
 Come votante devo poter...
 \begin{itemize}
-	\item poter contare sull'anonimia e segretezza del mio voto;
-	\item poter selezionare in modo facile le mie preferenze secondo la modalità di voto della/e scheda/e.
+	\item contare sull'anonimia e segretezza del mio voto;
+	\item selezionare in modo facile le mie preferenze secondo la modalità di voto della/e scheda/e.
 \end{itemize}
 
 \subsubsection{Amministratore della Sessione di Voto}
@@ -209,7 +217,7 @@ Come Garante della Sessione di Voto devo poter...
 \subsubsection{Responsabile di Seggio}
 Come Responsabile di Seggio devo poter...
 \begin{itemize}
-	\item dopo l'identificazione, la postazione per i singoli votanti;
+	\item attivare, dopo l'identificazione, la postazione per i singoli votanti;
 	\item verificare l'avvenuto voto di ciascun votante (senza ovviamente vederne il contenuto).
 \end{itemize}
 
