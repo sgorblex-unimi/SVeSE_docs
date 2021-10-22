@@ -120,10 +120,18 @@ Dal punto di vista della cybersecurity, il Sistema è progettato in modo da gara
 \section{Requisiti funzionali}
 
 
-\subsection{Amministratore della Sessione di Voto}
-L'Amministratore della Sessione di Voto si occupa di aggiungere i Garanti (predeterminati con meccanismi esterni al Sistema) e di costruire le schede elettorali previste per la consultazione.
+\subsection{Votanti}
+Ogni elettore deve poter esercitare il suo diritto al voto, ossia diventare votante. La possibilità di votare deve essere garantita dal Sistema sia di persona in un Seggio Fisico, sia da remoto via Internet.
 
-Una volta ricevuta la verifica da parte dei Garanti, l'Amministratore può dare il via alla Sessione di Voto, durante la quale gli elettori possono esprimere i rispettivi suffragi. L'amministratore inserisce nel sistema i dettagli sulla Sessione di Voto, tra cui la sua durata o la sua scadenza. Tale caratteristica temporale è gestita dal Sistema in modo automatico, che conclude la Sessione quando opportuno.
+Il votante che decida di votare on-line accede all'interfaccia del sistema tramite un portale pubblicizzato opportunamente dagli enti ufficiali. L'interfaccia offre innanzitutto una schermata di autenticazione. Il votante autenticato, a meno che abbia già votato, accede alle schede elettorali della consultazione corrente e le compila secondo le modalità previste dalle elezioni. Il votante conferma (o annulla) una schermata riassuntiva della sua scelta, quindi riceve una conferma di avvenuto suffragio, la quale non contiene la prova del relativo contenuto.
+
+Il votante che decida di votare di persona in un Seggio Fisico si reca nel seggio assegnatogli dalle normative vigenti, quindi viene identificato (dopo eventuali verifiche preliminari di accettazione) dal Responsabile di Seggio. Quest'ultimo indica al votante la postazione da cui effettuare il suffragio, che avviene in modalità del tutto analoghe a quelle on-line, ad eccezione della procedura di autenticazione, che è appunto sostituita da quella fisica.
+
+
+\subsection{Amministratore della Sessione di Voto}
+L'Amministratore della Sessione di Voto si occupa di aggiungere i Garanti (predeterminati con meccanismi esterni al Sistema) e di costruire le schede elettorali previste per la consultazione. L'amministratore inserisce inoltre nel sistema i dettagli sulla Sessione di Voto, tra cui la sua durata o la sua scadenza. Tale caratteristica temporale è gestita dal Sistema in modo automatico, che conclude la Sessione quando opportuno.
+
+Una volta ricevuta la verifica da parte dei Garanti, l'Amministratore può dare il via alla Sessione di Voto, durante la quale gli elettori possono esprimere i rispettivi suffragi. 
 
 L'amministratore ha la facoltà di sospendere la Sessione qualora una situazione eccezionale lo richieda. Eventuali richieste di sospensione sono inviate all'Amministratore dai Responsabili di Seggio. Durante una sospensione l'Amministratore ha facoltà di terminare definitivamente la Sessione, tuttavia tale procedimento è da intendersi eccezionale.
 
@@ -146,12 +154,6 @@ Durante la Sessione, il Responsabile di Seggio identifica i votanti e abilita le
 Il Responsabile di Seggio verifica che ogni votante abbia confermato ed inviato la scheda prima di abbandonare il seggio.
 
 Qualora situazioni eccezionali, ad esempio di minaccia alla sicurezza, dovessero presentarsi, il Responsabile di Seggio ha la facoltà di notificare l'Amministratore della Sessione di Voto e richiedere eventualmente la sospensione della consultazione presso il proprio Seggio Fisico. Solo l'amministratore può confermare tale sospensione.
-
-
-\subsection{Votanti}
-Il votante che decida di votare on-line accede all'interfaccia del sistema tramite un portale pubblicizzato opportunamente dagli enti ufficiali. L'interfaccia offre innanzitutto una schermata di autenticazione. Il votante autenticato, a meno che abbia già votato, accede alle schede elettorali della consultazione corrente e le compila secondo le modalità previste dalle elezioni. Il votante conferma (o annulla) una schermata riassuntiva della sua scelta, quindi riceve una conferma di avvenuto suffragio, la cui non contiene la prova del relativo contenuto.
-
-Il votante che decida di votare di persona in un Seggio Fisico si reca nel seggio assegnatogli dalle normative vigenti, quindi viene identificato (dopo eventuali verifiche preliminari di accettazione) dal Responsabile di Seggio. Quest'ultimo indica al votante la postazione da cui effettuare il suffragio, che avviene in modalità del tutto analoghe a quelle on-line, ad eccezione della procedura di autenticazione, che è appunto sostituita da quella fisica.
 
 
 \subsection{Risultati}
@@ -243,9 +245,6 @@ Come Responsabile di Seggio devo poter...
 
 \subsection{Voto}
 
-\subsubsection{Diritto di voto}
-Ogni elettore deve poter esercitare il suo diritto al voto, ossia diventare votante. La possibilità di votare deve essere garantita dal Sistema sia di persona in un Seggio Fisico, sia da remoto via Internet.
-
 \subsubsection{Anonimato del voto}
 In nessun modo deve essere possibile collegare un suffragio con l'identità che l'ha espresso.
 
@@ -293,7 +292,7 @@ Ai fini di garantire l'autenticità dei dati raccolti, è fondamentale che ogni 
 On-line l'autenticazione avviene tramite un sistema analogo a quello per l'autenticazione delle utenze di gestione. Nei seggi fisici l'autenticazione avviene tramite la presentazione di un documento d'identità.
 
 \subsubsection{Availability e malfunzionamenti}
-Il sistema deve essere sviluppato con un'attenzione particolare nei confronti dell'availability. Se il Sistema ha un interruzione momentanea nel funzionamento, deve informare immediatamente il votante, e bloccare le procedure di voto, riprendendole successivamente nel caso dopo aver ripetuto la procedura di identificazione.
+Il Sistema deve essere sviluppato con un'attenzione particolare nei confronti della disponibilità. Se il Sistema ha un interruzione momentanea nel funzionamento, deve informare immediatamente il votante, e bloccare le procedure di voto, riprendendole successivamente nel caso dopo aver ripetuto la procedura di identificazione.
 
 \subsubsection{Privacy}
 Ogni informazione sensibile che che viene memorizzata deve essere trattata secondo le direttive e le norme vigenti. Sul dispositivo usato non deve comunque rimanere alcuna traccia del contenuto del suffragio espresso.
