@@ -8,3 +8,4 @@
 *.toc
 /Session.vim
 /local.vimrc
+UML/*.eps

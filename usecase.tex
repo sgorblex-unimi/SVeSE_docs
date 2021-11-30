@@ -1,0 +1,41 @@
+\section{Casi d'uso}
+
+
+\subsection{Diagramma}
+Si veda la figura \ref{fig:usecasediag}.
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{UML/usecase.eps}
+	\caption{Diagramma dei casi d'uso.}
+	\label{fig:usecasediag}
+\end{figure}
+
+
+\subsection{Descrizione}
+
+\subsubsection{Voto}
+\begin{description}
+	\item[Nome] Votare
+	\item[Scopo] Il votante esprime il suo suffragio tramite il sistema. È possibile votare di persona nei seggi o a distanza online.
+	\item[Attore/i] Votante
+	\item[Pre-condizioni] Autenticazione (fisica o virtuale) del votante. Nel caso di voto in presenza, attivazione della postazione da parte del Responsabile di seggio.
+	\item[Trigger] Azione del votante
+	\item[Descrizione sequenza eventi] ~
+		\begin{description}
+			\item[Online] Il votante si autentica con la sua identità digitale sul sistema. Dopo un messaggio informativo, al votante viene mostrata la scheda elettorale, su cui esprime il suffragio secondo le modalità previste. Il votante conferma le proprie scelte prima nella vista della scheda e poi in una schermata di riepilogo (la cui non dà prova del contenuto del suffragio espresso). Il sistema conferma l'avvenuta ricezione del voto, dopodiché il votante può terminare la connessione.
+			\item[Di persona] Il votante viene identificato dal personale presente. Il Responsabile di Seggio abilità una postazione per il votante. Le modalità di compilazione della scheda sono analoghe a quelle a distanza, ad eccezione della procedura di autenticazione virtuale, assente. Espresso il suffragio, il Responsabile conferma l'invio (certificando così l'autenticità), dopodiché il votante può lasciare il Seggio;
+		\end{description}
+	\item[Alternativa/e] Nessuna.
+	\item[Post-condizioni] Il voto espresso dal votante è registrato nel sistema.
+\end{description}
+
+\subsubsection{Inizializzazione della Sessione di Voto}
+\begin{description}
+	\item[Nome] Inizio S.V.
+	\item[Scopo] Dare inizio alla Sessione di Voto, permettendo agli elettori di esprimere il proprio suffragio.
+	\item[Attore/i] Amministratore della Sessione di Voto, Garanti
+	\item[Pre-condizioni] Registrazione dei Garanti e dell'Amministratore della Sessione di Voto, creazione della scheda e configurazione della Sessione da parte dell'Amministratore.
+	\item[Trigger] Azione diretta dell'Amministratore.
+	\item[Descrizione sequenza eventi] L'Amministratore termina la configurazione della Sessione. I Garanti verificano che le schede elettorali e le impostazioni della Sessione siano consone con i termini della votazione e danno la loro conferma tramite il Sistema. Una volta che tutti i Garanti hanno dato la loro conferma, l'Amministratore può dare il via alla Sessione.
+	\item[Alternativa/e] Nessuna.
+	\item[Post-condizioni] Sessione di Voto pienamente funzionante.
+\end{description}

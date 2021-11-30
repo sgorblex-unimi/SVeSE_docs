@@ -1,0 +1,48 @@
+@startuml
+left to right direction
+Actor "{abstract}\nSupervisore" as super
+Actor "Garante" as G
+Actor "Ammin. S.V." as A
+Actor "Responsabile di Seggio" as R
+Actor "Votante" as V
+'Actor "SPID"
+
+Rectangle "Sistema di Voto e Scrutinio Elettronico" {
+	together {
+	usecase "{abstract}\nVotare" as votare
+	usecase "Votare in presenza" as presenza
+	usecase "Votare da remoto" as remoto
+	}
+	usecase "Configurazione S.V." as configurazione
+	usecase "Monitoraggio" as auditing
+	usecase "Inizio S.V." as start
+	usecase "Interruzione\neccezionale" as emergstop
+	usecase "Interruzione\neccezionale\ndi seggio" as emergstopseggio
+	usecase "Consulazione risultati" as risultati
+	usecase "Consulazione log" as log
+	usecase "Accettare/inviare\nvoti fisici" as accept
+	usecase "Abilitare postazioni" as postazioni
+	A -- configurazione
+	G -- start
+	A -- start
+	A -- emergstop
+	G -- emergstop
+	R -- postazioni
+	R -- accept
+	R -- emergstopseggio
+	V -- votare
+	super -- auditing
+	presenza --[hidden]> remoto
+	remoto --[hidden]> presenza
+	votare <|- presenza
+	votare <|- remoto
+	presenza --> postazioni: <<include>>
+	auditing --> log: <<include>>
+	auditing --> risultati: <<include>>
+	emergstop <-- emergstopseggio: <<extends>>
+}
+A --[hidden]> G
+G --[hidden]> A
+super <|- A
+super <|- G
+@enduml
