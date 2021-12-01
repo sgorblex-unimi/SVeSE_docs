@@ -1,0 +1,105 @@
+@startuml
+'left to right direction
+
+abstract class Utente {
+	nome: String
+	cognome: String
+	codiceFiscale: String
+	dataDiNascita: Date
+	luogoDiNascita: String
+}
+
+class Votante extends Utente {
+	votato
+	{method} vota(...)
+}
+
+class Seggio {
+	ID
+	Indirizzo
+}
+
+class ResponsabileDiSeggio {
+	seggio: Seggio
+	{method} attivaPostazione(...)
+	{method} accettaSuffragio(...)
+}
+ResponsabileDiSeggio --> Seggio
+Utente <|-- ResponsabileDiSeggio 
+
+abstract class Supervisore extends Utente {
+	sessioneDiVoto
+	{method} mostraLog(...)
+}
+
+class AmministratoreSessioneVoto extends Supervisore {
+	{method} creaSessione(...)
+	{method} startSessione(...)
+	{method} stopSessione(...)
+	{method} endSessione(...)
+}
+
+class Garante extends Supervisore {	
+	'classe Ente?
+	nomeEnte: String
+	{method} accettaParametriSessione(...)
+	{method} approvaAzioneAmministratore(...)
+}
+
+class Voto {
+	preferenzeEspresse
+	timstamp: Timestamp
+	seggio: Seggio
+	online: boolean
+	'insieme di preferenze nel caso siano ci siano contemporaneamente più votazioni
+}
+
+class Autenticathor {
+
+}
+
+'classe del main
+class Client {
+	{field} versione: int
+	{field} sessione: Sessione
+	{field} utente: Utente
+	{field} modalità: Modalità
+	' imposta il server e predispone l'interfaccia (pronta per l'autenticazione)
+	{method} setup(...)
+	' imposta utente e modalità dopo aver verificato l'identità della persona e eventualmente le credenziali di utente privilegiato
+	'{method} autentica(codiceFiscale: String, password: String)
+	{method} autentica(...)
+	{method} [metodi dei vari tipi di utente]
+	{method} logout(...)
+	{method} esci(...)
+}
+Client --> Utente
+Client --> Voto
+
+'classe del main
+class Server {
+	{field} db: DataBase
+	{method} registraVoto(...)
+	{method} inviaDatiSessione(...)
+	{method} [metodi di risposta alle richieste]
+	{method} spoglio(...)
+}
+Server "1" --> "*" Client
+
+class SessioneDiVoto {
+	URL: URL
+	dataInizio
+	dataFine
+	nome
+	id
+	descrizione
+	garanti
+}
+AmministratoreSessioneVoto --> SessioneDiVoto
+SessioneDiVoto "*" <--> "1" Garante
+
+class SchedaElettorale {
+	opzioni
+}
+
+@enduml
