@@ -25,7 +25,7 @@ class ResponsabileDiSeggio {
 	{method} accettaSuffragio(...)
 }
 ResponsabileDiSeggio --> Seggio
-Utente <|-- ResponsabileDiSeggio 
+Utente <|-- ResponsabileDiSeggio
 
 abstract class Supervisore extends Utente {
 	sessioneDiVoto
@@ -39,7 +39,7 @@ class AmministratoreSessioneVoto extends Supervisore {
 	{method} endSessione(...)
 }
 
-class Garante extends Supervisore {	
+class Garante extends Supervisore {
 	'classe Ente?
 	nomeEnte: String
 	{method} accettaParametriSessione(...)
@@ -55,7 +55,12 @@ class Voto {
 }
 
 class Autenticathor {
-
+	{field} serverAutenticazione
+	{method} autentica()
+	{method} autenticaGarante()
+	{method} autenticaAmministratore()
+	{method} autentica()
+	{method} autenticaResponsabile()
 }
 
 'classe del main
@@ -69,7 +74,20 @@ class Client {
 	' imposta utente e modalità dopo aver verificato l'identità della persona e eventualmente le credenziali di utente privilegiato
 	'{method} autentica(codiceFiscale: String, password: String)
 	{method} autentica(...)
+	' #############################################################
 	{method} [metodi dei vari tipi di utente]
+	{method} vota()
+	{method} attivaPostazione()
+	{method} accettaSuffragio()
+	{method} creaSessione() 
+	{method} startSessione()
+	{method} stopSessione()
+	{method} endSessione()
+	{method} accettaParametriSessione()
+	{method} approvaAzioneAmministratore()
+	{method} approvaAzioneAmministratore()
+
+	' #############################################################
 	{method} logout(...)
 	{method} esci(...)
 }
@@ -82,6 +100,17 @@ class Server {
 	{method} registraVoto(...)
 	{method} inviaDatiSessione(...)
 	{method} [metodi di risposta alle richieste]
+	{method} vota()
+	{method} attivaPostazione()
+	{method} accettaSuffragio()
+	{method} creaSessione() 
+	{method} startSessione()
+	{method} stopSessione()
+	{method} endSessione()
+	{method} accettaParametriSessione()
+	{method} approvaAzioneAmministratore()
+	{method} approvaAzioneAmministratore()
+	' #############################################################
 	{method} spoglio(...)
 }
 Server "1" --> "*" Client
