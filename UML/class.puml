@@ -1,99 +1,6 @@
 @startuml
 'left to right direction
 
-abstract class Utente {
-	nome: String
-	cognome: String
-	codiceFiscale: String
-	dataDiNascita: Date
-	luogoDiNascita: String
-}
-
-class Votante extends Utente {
-	votato
-	{method} vota(...)
-}
-
-class Seggio {
-	ID
-	Indirizzo
-}
-
-class ResponsabileDiSeggio {
-	seggio: Seggio
-	{method} attivaPostazione(...)
-	{method} accettaSuffragio(...)
-}
-ResponsabileDiSeggio --> Seggio
-Utente <|-- ResponsabileDiSeggio
-
-abstract class Supervisore extends Utente {
-	sessioneDiVoto
-	{method} mostraLog(...)
-}
-
-class AmministratoreSessioneVoto extends Supervisore {
-	{method} creaSessione(...)
-	{method} startSessione(...)
-	{method} stopSessione(...)
-	{method} endSessione(...)
-}
-
-class Garante extends Supervisore {
-	'classe Ente?
-	nomeEnte: String
-	{method} accettaParametriSessione(...)
-	{method} approvaAzioneAmministratore(...)
-}
-
-class Voto {
-	preferenzeEspresse
-	timstamp: Timestamp
-	seggio: Seggio
-	online: boolean
-	'insieme di preferenze nel caso siano ci siano contemporaneamente più votazioni
-}
-
-class Autenticathor {
-	{field} serverAutenticazione
-	{method} autentica()
-	{method} autenticaGarante()
-	{method} autenticaAmministratore()
-	{method} autentica()
-	{method} autenticaResponsabile()
-}
-
-'classe del main
-class Client {
-	{field} versione: int
-	{field} sessione: Sessione
-	{field} utente: Utente
-	{field} modalità: Modalità
-	' imposta il server e predispone l'interfaccia (pronta per l'autenticazione)
-	{method} setup(...)
-	' imposta utente e modalità dopo aver verificato l'identità della persona e eventualmente le credenziali di utente privilegiato
-	'{method} autentica(codiceFiscale: String, password: String)
-	{method} autentica(...)
-	' #############################################################
-	{method} [metodi dei vari tipi di utente]
-	{method} vota()
-	{method} attivaPostazione()
-	{method} accettaSuffragio()
-	{method} creaSessione() 
-	{method} startSessione()
-	{method} stopSessione()
-	{method} endSessione()
-	{method} accettaParametriSessione()
-	{method} approvaAzioneAmministratore()
-	{method} approvaAzioneAmministratore()
-
-	' #############################################################
-	{method} logout(...)
-	{method} esci(...)
-}
-Client --> Utente
-Client --> Voto
-
 'classe del main
 class Server {
 	{field} db: DataBase
@@ -113,7 +20,43 @@ class Server {
 	' #############################################################
 	{method} spoglio(...)
 }
-Server "1" --> "*" Client
+
+'classe del main
+class Client {
+	{field} versione: int
+	{field} sessione: Sessione
+	{field} utente: Utente
+	{field} modalità: Modalità
+	{field} autenticatore: Authenticator
+	' imposta il server e predispone l'interfaccia (pronta per l'autenticazione)
+	{method} setup(...)
+	' imposta utente e modalità dopo aver verificato l'identità della persona e eventualmente le credenziali di utente privilegiato
+	{method} autentica(...)
+	{method} logout(...)
+	{method} esci(...)
+
+	{method} vota()
+	{method} attivaPostazione()
+	{method} accettaSuffragio()
+	{method} mostraLog()
+	{method} creaSessione() 
+	{method} startSessione()
+	{method} stopSessione()
+	{method} endSessione()
+	{method} accettaParametriSessione()
+	{method} approvaAzioneAmministratore()
+}
+Server "1" -- "*" Client
+
+class Authenticator {
+	{field} serverAutenticazione
+	{method} autentica()
+	{method} autenticaGarante()
+	{method} autenticaAmministratore()
+	{method} autentica()
+	{method} autenticaResponsabile()
+}
+Authenticator --> Client
 
 class SessioneDiVoto {
 	URL: URL
@@ -124,11 +67,65 @@ class SessioneDiVoto {
 	descrizione
 	garanti
 }
+SessioneDiVoto "1" <--> "*" Garante
+
+abstract class Utente {
+	nome: String
+	cognome: String
+	codiceFiscale: String
+	dataDiNascita: Date
+	luogoDiNascita: String
+}
+Client "1" --> "*" Utente
+
+class Votante extends Utente {
+	votato: boolean
+	{method} vota(...)
+}
+
+class Seggio {
+	ID
+	indirizzo
+}
+
+class ResponsabileDiSeggio extends Utente {
+	seggio: Seggio
+	{method} attivaPostazione(...)
+	{method} accettaSuffragio(...)
+}
+ResponsabileDiSeggio --> Seggio
+
+abstract class Supervisore extends Utente {
+	{method} mostraLog(...)
+}
+
+class AmministratoreSessioneVoto extends Supervisore {
+	{method} creaSessione(...)
+	{method} startSessione(...)
+	{method} stopSessione(...)
+	{method} endSessione(...)
+}
 AmministratoreSessioneVoto --> SessioneDiVoto
-SessioneDiVoto "*" <--> "1" Garante
+
+class Garante extends Supervisore {
+	'classe Ente?
+	nomeEnte: String
+	{method} accettaParametriSessione(...)
+	{method} approvaAzioneAmministratore(...)
+}
+
+class Voto {
+	preferenzeEspresse
+	timstamp: Timestamp
+	seggio: Seggio
+	online: boolean
+	'insieme di preferenze nel caso siano ci siano contemporaneamente più votazioni
+}
+Client "1" --> "*" Voto
 
 class SchedaElettorale {
 	opzioni
 }
+SessioneDiVoto "1" --> "*" SchedaElettorale
 
 @enduml
