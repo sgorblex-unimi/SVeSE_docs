@@ -1,0 +1,32 @@
+@startuml
+actor "Persona fisica" as P 
+participant "Client" as C
+participant "Authenticator" as A 
+participant "Votante" as V
+participant "Server" as S 
+
+P -> C : Authentication Request
+C -> A : Forwarded Authentication Request
+A -> S: Forwarded Authentication Request
+
+
+alt "Credenziali corrette"
+
+        S -> A: Authentication Accepted
+	S -> V **
+        A -> C: Authentication Accepted
+        C -> P: Authentication Accepted
+	P -> C: Vota
+	C -> V: Vota
+	V -> S: Vota
+	C -> V !!: esci
+
+
+else Credenziali rifiutate
+
+    S -> A: Authentication Refused
+    A -> C: Authentication Refused
+    C -> P: Authentication Refused
+
+end
+@enduml
