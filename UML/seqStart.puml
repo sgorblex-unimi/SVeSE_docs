@@ -2,7 +2,7 @@
 actor "Persona fisica" as P
 participant "Client" as C
 participant "Authenticator" as A  
-participant "Amministratore della sessione di voto" as ASess
+participant "Amministratore\nSessione di Voto" as ASess
 participant "Server" as S 
 participant "Garanti" as G
 
@@ -20,7 +20,7 @@ alt "Credenziali corrette"
 	P -> C: Start della sessione di voto
 	C -> ASess: Start della sessione di voto
     	group assert 
-		G -> S: Approvazione della configurazione 
+		G -> S: Approvazione\nconfigurazione
    	end
 	ASess -> S: Start della sessione di voto
 	P -> C: esci
