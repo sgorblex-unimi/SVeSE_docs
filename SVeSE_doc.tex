@@ -1,0 +1,46 @@
+\documentclass{report}
+\pagestyle{headings}
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{geometry}
+
+\usepackage{graphicx}
+\usepackage{caption}
+\captionsetup{format=hang,labelfont={sf,bf},tableposition=top,figureposition=bottom,font=small}
+
+\usepackage[hidelinks]{hyperref}
+
+\geometry{a4paper,top=2cm,bottom=3cm,left=2.5cm,right=2.5cm,heightrounded,bindingoffset=5mm}
+\setcounter{secnumdepth}{3}
+
+
+
+\begin{document}
+
+\title{Relazione di progetto\\
+\large Sistema di Voto e Scrutinio Elettronico}
+\author{Alessandro Clerici Lorenzini, Edoardo Della Rossa}
+\date{Anno Accademico 2021-2022}
+
+\maketitle
+\tableofcontents
+
+% Capitolo 1: Introduzione
+\include{tex/1_introduzione.tex}
+
+% Capitolo 2: Analisi e specifica dei requisiti
+\include{tex/2_requisiti.tex}
+
+% Capitolo 3: Progettazione del sistema (Diagrammi UML)
+\include{tex/3_progettazione.tex}
+
+% Capitolo 4: Implementazione del sistema
+\include{tex/4_implementazione.tex}
+
+\appendix
+
+% Appendice: Guida all'utilizzo
+\include{tex/A_guidautilizzo.tex}
+
+\end{document}

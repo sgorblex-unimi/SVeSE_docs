@@ -1,8 +1,13 @@
-\section{Casi d'uso}
+\chapter{Progettazione del sistema}
 
 
-\subsection{Diagramma}
-Si veda la figura \ref{fig:usecasediag}.
+
+
+\section{Diagrammi}
+
+
+\subsection{Diagramma dei casi d'uso}
+Si faccia riferimento alla figura \ref{fig:usecasediag}.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=\textwidth]{UML/usecase.eps}
@@ -11,9 +16,7 @@ Si veda la figura \ref{fig:usecasediag}.
 \end{figure}
 
 
-\subsection{Descrizione}
-
-\subsubsection{Voto}
+\subsubsection{Scenario: Voto}
 \begin{description}
 	\item[Nome] Votare
 	\item[Scopo] Il votante esprime il suo suffragio tramite il sistema. È possibile votare di persona nei seggi o a distanza online.
@@ -29,7 +32,7 @@ Si veda la figura \ref{fig:usecasediag}.
 	\item[Post-condizioni] Il voto espresso dal votante è registrato nel sistema.
 \end{description}
 
-\subsubsection{Inizializzazione della Sessione di Voto}
+\subsubsection{Scenario: Inizializzazione della Sessione di Voto}
 \begin{description}
 	\item[Nome] Inizio S.V.
 	\item[Scopo] Dare inizio alla Sessione di Voto, permettendo agli elettori di esprimere il proprio suffragio.
@@ -42,13 +45,19 @@ Si veda la figura \ref{fig:usecasediag}.
 \end{description}
 
 
+\subsection{Diagramma delle classi di progetto}
+Si faccia riferimento alla figura \ref{fig:classdiag}.
+\begin{figure}[ht]
+	\centering
+	\includegraphics[height=.97\textheight]{UML/class.eps}
+	\caption{Diagramma delle classi.}
+	\label{fig:classdiag}
+\end{figure}
 
 
-\section{Sequenze}
 
-
-\subsection{Diagrammi}
-Si vedano la figura \ref{fig:seqdiagvota} e la figura \ref{fig:seqdiagstart}.
+\subsection{Diagrammi di sequenza}
+Si faccia riferimento alle figure \ref{fig:seqdiagvota} e \ref{fig:seqdiagstart}.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=.9\textwidth]{UML/seqVota.eps}
@@ -63,15 +72,6 @@ Si vedano la figura \ref{fig:seqdiagvota} e la figura \ref{fig:seqdiagstart}.
 	\label{fig:seqdiagstart}
 \end{figure}
 
-
-\section{Classi}
-
-
-\subsection{Diagramma}
-Si veda la figura \ref{fig:classdiag}.
-\begin{figure}[ht]
-	\centering
-	\includegraphics[height=.97\textheight]{UML/class.eps}
-	\caption{Diagramma delle classi.}
-	\label{fig:classdiag}
-\end{figure}
+\subsection{Diagrammi di attività}
+\subsection{Macchine di stato}
+\subsection{Diagramma dei componenti}
