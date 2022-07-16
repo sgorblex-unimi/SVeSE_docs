@@ -40,6 +40,7 @@ Per il testing viene utilizzato il paradigma del test unitario (\emph{unit testi
 
 
 \section{Persistenza dei dati}\label{db}
+I dati persistenti sono memorizzati in un database PostgreSQL (\url{https://www.postgresql.org}) e gestiti tramite l'interfaccia JPA (Java Persistent API, standard introdotto da Oracle) implementata da Spring Data. La gestione è supplementata dall'utilizzo di Hibernate (\url{https://hibernate.org}), una libreria che ottimizza la gestione della persistenza e costruisce automaticamente query SQL pensate per un certo \emph{dialetto}, cioè specifiche per un DBMS. Spring Data permette di programmare servizi DAO come interfacce Java (repository) in cui i metodi hanno nomi significativi, che poi vengono implementate automaticamente dal framework. Grazie a questa astrazione, le query SQL sono ottimizzate e versatili (non \emph{hard-coded}); è possibile infatti cambiare, se lo si volesse, il DBMS con il minimo sforzo, modificando unicamente il file \verb!application.properties!. Le query SQL sono comunque visibili, a meno dei dati sensibili, nei log del sistema.
 
 
 
