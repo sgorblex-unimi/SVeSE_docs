@@ -58,24 +58,37 @@ Nella figura \ref{fig:classdiag} è riportato il diagramma delle classi di proge
 
 
 \subsection{Diagrammi di sequenza}
-Si faccia riferimento alle figure \ref{fig:seqdiagvota} e \ref{fig:seqdiagstart}.
-% Voto
-% Creazione di una nuova sessione
-% Approvazione di una nuova sessione da parte dei garanti
-% Visualizzazione dei risultati
+Alla figura \ref{fig:seqdiagvota} è possibile consultare il diagramma di sequenza delle operazioni di voto e mentre alla figura \ref{fig:seqdiagcreate} il diagramma di sequenza delle operazione di creazione di una sessione.
+La figura \ref{fig:seqdiagapprova} è il diagramma di sequenza dell'approvazione della sessione da parte dei garanti, mentre la figura \ref{fig:seqdiagconsult} è il diagramma di sequenza delle operazioni di consultazioni dei risultati.
+
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=.9\textwidth]{UML/seqVota.eps}
+	\includegraphics[width=\textwidth]{UML/seqVota.eps}
 	\caption{Diagramma di sequenza dell'operazione di voto}
 	\label{fig:seqdiagvota}
 \end{figure}
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=\textwidth]{UML/seqStart.eps}
-	\caption{Diagramma di sequenza dell'operazione di start della sessione di voto}
-	\label{fig:seqdiagstart}
+	\includegraphics[width=\textwidth]{UML/seqCreate.eps}
+	\caption{Diagramma di sequenza delle operazioni di creazione di una sessione}
+	\label{fig:seqdiagcreate}
 \end{figure}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=\textwidth]{UML/seqApprova.eps}
+	\caption{Diagramma di sequenza dell'approvazione della sessione da parte dei garanti}
+	\label{fig:seqdiagapprova}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=\textwidth]{UML/seqConsult.eps}
+	\caption{Diagramma di sequenza della consultazione dei risultati}
+	\label{fig:seqdiagconsult}
+\end{figure}
+
 
 \subsection{Diagrammi di attività}
 Si faccia riferimento alla figura \ref{fig:activitydiagcreate} per il diagramma di attività delle operazioni dell'amministratore per la creazione di un nuova sessione e alla figura \ref{fig:activitydiagvote} per il diagramma di attività delle operazioni di voto.

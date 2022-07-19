@@ -1,0 +1,23 @@
+@startuml
+actor "Web client" as WC
+participant WebServer as WS
+participant Session as S
+participant SpringSecurity as SS
+
+WC -> WS : Authentication Request
+WC <-- WS : Authentication Response
+WS -> SS : Authentication Check Request
+WS <-- SS : Authentication Check Response
+
+alt Authentication successful
+   WS -> S : getRoles(loggedUser);
+   WS <-- S : user roles
+   alt Session is ready && (userRole == guarantor)
+      WS <- WC : '/approve' resource
+      WC -> WS : Confirm approval
+      WS -> S  : approve(Person loggedUser);
+   end
+else Authentication failed or user not guarantor
+   WS -> WC !! : Error Message
+end
+@enduml

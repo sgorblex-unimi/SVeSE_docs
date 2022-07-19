@@ -1,32 +1,37 @@
 @startuml
-actor "Persona fisica" as P 
-participant "Client" as C
-participant "Authenticator" as A 
-participant "Votante" as V
-participant "Server" as S 
+actor "Web client" as WC
+participant WebServer as WS
+participant VotingPaper as VP
+participant "Sub-VotingPaper" as SVP
+participant SpringSecurity as SS
+participant Session as S
 
-P -> C : Authentication Request
-C -> A : Forwarded Authentication Request
-A -> S: Forwarded Authentication Request
+WC -> WS : Authentication Request
+WC <-- WS : Authentication Response
+WS -> SS : Authentication Check Request
+WS <-- SS : Authentication Check Response
 
-
-alt "Credenziali corrette"
-
-        S -> A: Authentication Accepted
-	S -> V **
-        A -> C: Authentication Accepted
-        C -> P: Authentication Accepted
-	P -> C: Vota
-	C -> V: Vota
-	V -> S: Vota
-	C -> V !!: esci
-
-
-else Credenziali rifiutate
-
-    S -> A: Authentication Refused
-    A -> C: Authentication Refused
-    C -> P: Authentication Refused
-
+alt Authentication successful
+    WS <- S : getPapers();
+    WS -> WC : '/vote' resource
+    loop for each voting paper
+        S -> VP ** : Puntatore a VotingPaper
+        WS <- VP : getMethod()
+        alt method == ElectionMethod.PREFERENCED
+            loop for each sub-voting paper
+            S -> SVP ** : Puntatore a VotingPaper
+            WC -> WS : Select the choice
+            WS -> SVP : addVote()
+            deactivate SVP
+            end
+        else method != ElectionMethod.PREFERENCED
+            WC -> WS : Select the choice
+            WS -> VP : addVote()
+        deactivate VP
+    end
+    end
+else Authentication failed
+   WS -> WC !! : Error Message
 end
+
 @enduml

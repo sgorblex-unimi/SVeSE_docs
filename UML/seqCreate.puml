@@ -1,0 +1,36 @@
+@startuml
+actor "Web client" as WC
+participant WebServer as WS
+participant "Sub-VotingPaper" as SVP
+participant VotingPaper as VP
+participant SpringSecurity as SS
+database PersonRepository as PR
+participant Session as S
+
+WC -> WS : Authentication Request
+WC <-- WS : Authentication Response
+WS -> SS : Authentication Check Request
+WS <-- SS : Authentication Check Response
+
+alt Authentication successful
+    WS -> WC : '/newsession' resource
+    WS -> PR : Available guarantors request
+    WS <-- PR : Available guarantors response
+    WC <-- WS : Available guarantors
+    WC -> WS : Guarantors selection
+    WC -> WS : Set start, end,
+    WC -> WS : Election method, Choices
+    WS -> VP ** : Create a new voting paper
+    alt method == ElectionMethod.PREFERENCED
+        loop for each sub-voting paper
+            WC -> WS : Election method, Choices
+            WS -> SVP ** : Create a new voting paper
+            WS <-- SVP : Return a pointer to the new subvoting paper
+            WS -> VP : Add the new subvoting paper
+        end
+    end
+    WS -> S : initializeSession([...])
+else Authentication failed
+   WS -> WC !! : Error Message
+end
+@enduml
