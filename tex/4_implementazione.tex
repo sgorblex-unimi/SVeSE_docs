@@ -32,6 +32,35 @@ Per il testing viene utilizzato il paradigma del test unitario (\emph{unit testi
 \section{Design pattern}\label{pattern}
 
 
+\subsection{Pattern GoF}\label{GoF}
+L'utilizzo dei design pattern è massiccio sia nel codice del sistema in sé, sia nell'utilizzo implicito dei framework di supporto. Tra gli utilizzi notevoli:
+\begin{description}
+	\item[Singleton] la classe \verb!Session! implementa il design pattern: l'unico costruttore della classe è privato e il metodo statico \verb!getSession! fornisce l'unica istanza esistente (se precedentemente istanziata con \verb!initializeSession!) di \verb!Session!. Non è quindi possibile istanziare più di una \verb!Session! contemporaneamente;
+	\item[Model-View-Controller (MVC)] i pacchetti \verb!model! e \verb!view! consistono nelle omonime componenti del design pattern; la parte di controller è in parte codificata nella logica sia di \verb!model! sia di \verb!view!, in parte è astratta dall'utilizzo dei framework Vaadin e Spring. Tali framework sono infatti pesantamente fondati sul pattern MVC;
+	\item[Data Access Object (DAO)] l'utilizzo della libreria di Spring Data JPA permette di astrarre le classi DAO usate dietro le quinte, tuttavia una loro versione astratta rimane nelle interfacce che estendono \verb!JpaRepository!, che consistono proprio in una serie di operazioni sui dati persistenti che vengono poi implementate automaticamente e fornite agli utilizzatori tramite l'annotazione \verb!@Autowired!. Anche la libreria Hibernate contribuisce all'implementazione dei DAO costruendo query ottimizzate per il database in utilizzo;
+	\item[Observer] l'interfaccia costruita da Vaadin è fondamentalmente basata sul pattern observer. Al fine di rendere interattive le pagine senza delegare al programmatore il compito di analizzare il comportamento diretto dell'utente nei confronti del browser, esiste uno strato intermedio che si occupa di notificare i click e le interazioni dell'utente ai componenti interessati. Questo permette una gestione più leggera dell'interfaccia, per migliorare performance e organizzazione del codice sottostante. Eventi come i click e i cambi di pagina vengono notificati dai publisher implementati da Vaadin e vengono ascoltati dai subscriber inseriti durante la creazione dei componenti interattivi delle pagine, i \emph{listener} (per esempio \emph{click listener}), oppure dalla logica intrinseca di Spring Web (ad esempio per il cambio di pagina). Altri esempi sono l'implementazione di \verb!BeforeEnterObserver! nell'interfaccia per il login o l'\verb!@EventListener! utilizzato nella classe \verb!SVeSE! per effettuare operazioni di inizializzazione appena ricevuta la notifica di avvenuto avvio da parte di Spring Boot.
+\item[Service] numerose classi service vengono usate dai framework utilizzati, in aggiunta alle quali alcune sono state costruite specificamente per il sistema SVeSE, specificamente nel pacchetto \verb!security!: la classe \verb!SVeSEUserDetailsService! consiste in un'implementazione dell'interfaccia \verb!UserDetailsService!, usata da Spring Security nell'operazione di login per recuperare i dati sull'utente che viene autenticato; la classe \verb!SecurityService! consiste in una serie di metodi di utility per interagire con la sessione web (per esempio per il logout);
+\item[Adapter] la configurazione della sicurezza web è operata dalla classe \verb!SecurityConfig!, che implementa l'adattatore tra Vaadin e Spring \verb!VaadinWebSecurityConfigurerAdapter!, il cui semplifica le chiamate ai metodi delegandole poi a chiamate di Spring Security;
+\item[Strategy] nel modello, a ogni scheda elettorale è associato un \verb!VoteDecider!, un'interfaccia che si compone di un metodo \verb!canVote! dedicato a discriminare chi ha diritto al voto per la scheda associata. Questa interfaccia implementa il design pattern strategy, dal momento che il diritto di voto della persona può essere determinato da qualunque suo dato, a seconda delle implementazioni dell'interfaccia stessa;
+\item[Iterator] alcune classi del modello implementano l'interfaccia \verb!Iterable!, cioè forniscono un \verb!Iterator!: la scheda elettorale (\verb!VotingPaper!) permette di iterare tra le possibili scelte che essa contiene; la classe \verb!Results! permette di iterare tra i risultati delle singole scelte (\verb!Result!). È comunque molto comune l'utilizzo degli \verb!Iterator!, inclusi quelli forniti dalla libreria standard di Java.
+\end{description}
+
+
+\subsection{Pattern GRASP}
+L'attenzione ai principi GRASP (\emph{General Responsibility Assignment Software Patterns}) è costante durante lo sviluppo.
+\begin{description}
+	\item[High Cohesion] ogni classe, con pochissime eccezioni, ha una sua coerenza semantica, dal momento che rappresenta un oggetto o concetto reale (sessione di voto, scheda elettorale, etc.);
+	\item[Low Coupling] i collegamenti tra classi mettono in relazione oggetti semantici diversi tra loro, mentre gli aspetti coesi sono raggruppati nella stessa classe (una sessione ha alcune schede elettorali);
+	\item[Information Expert] i campi delle classi sono organizzati in modo da mantenere l'informazione a chi appartiene alla corretta area semantica, di modo che l'\emph{information expert} non confligga con il principio di coesione;
+	\item[Creator] ad eccezione dei casi in cui il costruttore è una scelta migliore, la costruzione della classe è delegata a chi ne ha la responsabilità (ad esempio il metodo statico per il \emph{singleton} \verb!Session!);
+	\item[Controller] si veda MVC al paragrafo \ref{GoF};
+	\item[Polymorphism] interfacce come \verb!Vote! e \verb!VoteDecider! garantiscono di poter usare diverse implementazioni pur mantenendo valida la funzionalità;
+	\item[Pure Fabrication] le poche classi di pura invenzione mantengono un'area semantica coesa. Si veda anche Service al paragrafo \ref{GoF};
+	\item[Indirection] l'utilizzo di classi di supporto alla comunicazione è volutamente limitato ai fini di minimizzare il \emph{coupling}, tuttavia è presente ad esempio negli adapter (paragrafo \ref{GoF});
+	\item[Protected Variations] l'utilizzo delle interfacce e in generale la buona pratica di usare tipi apparenti in alto nella gerarchia, oltre che ovviamente l'utilizzo di getter e setter invece di dare visibilità ai campi, permette la modifica futura delle implementazioni pur mantenendo la funzionalità del sistema.
+\end{description}
+
+
 
 
 \section{Interfaccia grafica}\label{gui}
@@ -46,3 +75,4 @@ I dati persistenti sono memorizzati in un database PostgreSQL (\url{https://www.
 
 
 \section{Auditing}\label{logging}
+I framework Spring e Vaadin (descritti in precedenza) contengono un sistema di logging basato sull'interfaccia della libreria SLF4J (\url{https://www.slf4j.org}). Gli eventi generati dai due framework di cui sopra sono quindi loggati automaticamente. Gli eventi del sistema SVeSE, in particolare la logica del modello, sono tracciati da chiamate (aggiunte nel codice) alla medesima libreria, di modo da uniformare l'output e l'archiviazione dei log sotto un'unica configurazione. SLF4J consiste in un'interfaccia che unifica potenzialmente diverse librerie di logging, per cui è molto semplice, con piccole modifiche alla configurazione, adottare il logging nativo di Java oppure, ad esempio, Log4j (\url{https://logging.apache.org/log4j}).
