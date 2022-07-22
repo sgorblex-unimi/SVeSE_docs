@@ -20,11 +20,15 @@ alt Authentication successful
         alt method == ElectionMethod.PREFERENCED
             loop for each sub-voting paper
             S -> SVP ** : Puntatore a VotingPaper
+	    VP <- WS : getChoices()
+	    WS -> WC : Display choices
             WC -> WS : Select the choice
             WS -> SVP : addVote()
             deactivate SVP
             end
         else method != ElectionMethod.PREFERENCED
+	    VP <- WS : getChoices()
+	    WS -> WC : Display choices
             WC -> WS : Select the choice
             WS -> VP : addVote()
         deactivate VP

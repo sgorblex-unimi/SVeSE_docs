@@ -21,7 +21,7 @@ alt Authentication successful
     WC -> WS : Set start, end,
     WC -> WS : Election method, Choices
     WS -> VP ** : Create a new voting paper
-    alt method == ElectionMethod.PREFERENCED
+    opt method == ElectionMethod.PREFERENCED
         loop for each sub-voting paper
             WC -> WS : Election method, Choices
             WS -> SVP ** : Create a new voting paper

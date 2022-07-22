@@ -85,16 +85,16 @@ boolean repOk() {
 
 
 \section{Testing}\label{testing}
-Per il testing viene utilizzato il paradigma del test unitario (\emph{unit testing}) tramite la piattaforma JUnit (\url{https://junit.org/junit5}). Per scelta di design, il codice ha una struttura dichiarativa, con poche strutture di controllo; tuttavia quando applicabile viene usato il criterio di copertura delle decisioni (\emph{decision coverage}), che permette di verificare che il sistema si comporti nel modo previsto nei casi principali, cioè quelli che determinano l'esito di ogni decisione. Nei casi in cui questo non sia sufficiente sono forniti test case supplementari che coprano le singole condizioni (\emph{condition coverage}) all'interno delle decisioni.
+Per il testing viene utilizzato il paradigma del test unitario (\emph{unit testing}) tramite la piattaforma JUnit (\url{https://junit.org/junit5}). Per scelta di design, il codice ha una struttura dichiarativa, con poche strutture di controllo; tuttavia quando applicabile viene usato il criterio di copertura delle decisioni (\emph{decision coverage}), che permette di verificare che il sistema si comporti nel modo previsto nei casi principali, cioè quelli che determinano l'esito di ogni decisione. Nei casi in cui questo non sia sufficiente sono forniti test case supplementari che coprano le singole condizioni (\emph{condition coverage}) all'interno delle decisioni. La classe \verb!TestModel! contiene un test comprensivo delle operazioni del modello sulla sessione.
 
 
 
 
 \section{Diagramma delle classi di programma}\label{implclassi}
 Durante la fase di progettazione, è stato deciso di definire in modo formale la struttura delle classi (come riportato nel diagramma delle classi di progetto alla figura \ref{fig:classdiag}) per definire lo scheletro su cui basare l'implementazione del sistema.
-Oltre alla scelta di fornire una struttura rigida, si è deciso anche di non progettare a priori e non fornire vincoli sull'implementazione delle singole classi per due motivi principali.
+Oltre alla scelta di fornire uno schema, si è deciso anche di non progettare a priori e non fornire vincoli sull'implementazione delle singole classi per due motivi principali.
 
-Il primo riguarda l'agilità nello sviluppo: sfruttando un'infrastruttura rigida, ma con un margine di flessibilità al suo interno, si riesce ad ottenere il vantaggio di una progettazione rigida senza dover rinunciare al vantaggio implementativo dell'adattare il codice all'interno di una classe alle esigenze che derivano dall'implementazione.
+Il primo riguarda l'agilità nello sviluppo: sfruttando un'infrastruttura rigida, ma con un margine di flessibilità al suo interno, si riesce ad ottenere il vantaggio di una progettazione formale senza dover rinunciare al vantaggio implementativo dell'adattare il codice all'interno di una classe alle esigenze che derivano dall'implementazione.
 Il secondo riguarda la scelta di utilizzo di alcuni framework necessari per la creazione di un prodotto serio e professionale, quali Spring Security e Vaadin. Nonostante lo studio svolto a priori in modo da avere già le conoscenze base necessarie, l'unico modo per comprendere a pieno l'utilizzo di questi strumenti è inevitabilmente tramite lo sviluppo, e questo non era compatibile con una progettazione approfondita e dettagliata sin dalle prime fasi.
 
 In ogni caso, per permettere una piena comprensione del codice sorgente, all'interno di questa relazione è riportato anche il diagramma delle classi di programma (figura \ref{fig:programclassdiag}), al quale è affidato uno sguardo più implementativo.
@@ -115,7 +115,7 @@ L'utilizzo dei design pattern è massiccio sia nel codice del sistema in sé, si
 \begin{description}
 	\item[Singleton] la classe \verb!Session! implementa il design pattern: l'unico costruttore della classe è privato e il metodo statico \verb!getSession! fornisce l'unica istanza esistente (se precedentemente istanziata con \verb!initializeSession!) di \verb!Session!. Non è quindi possibile istanziare più di una \verb!Session! contemporaneamente;
 	\item[Model-View-Controller (MVC)] i pacchetti \verb!model! e \verb!view! consistono nelle omonime componenti del design pattern; la parte di controller è in parte codificata nella logica sia di \verb!model! sia di \verb!view!, in parte è astratta dall'utilizzo dei framework Vaadin e Spring. Tali framework sono infatti pesantamente fondati sul pattern MVC;
-	\item[Data Access Object (DAO)] l'utilizzo della libreria di Spring Data JPA permette di astrarre le classi DAO usate dietro le quinte, tuttavia una loro versione astratta rimane nelle interfacce che estendono \verb!JpaRepository!, che consistono proprio in una serie di operazioni sui dati persistenti che vengono poi implementate automaticamente e fornite agli utilizzatori tramite l'annotazione \verb!@Autowired!. Anche la libreria Hibernate contribuisce all'implementazione dei DAO costruendo query ottimizzate per il database in utilizzo;
+	\item[Data Access Object (DAO)] l'utilizzo della libreria di Spring Data JPA permette di astrarre le classi DAO usate dietro le quinte, tuttavia una loro versione astratta rimane nelle interfacce che estendono \verb!JpaRepository!. Tali interfacce consistono proprio in una serie di operazioni sui dati persistenti, che vengono poi implementate automaticamente e fornite agli utilizzatori tramite l'annotazione \verb!@Autowired!. Anche la libreria Hibernate contribuisce all'implementazione dei DAO costruendo query ottimizzate per il database in utilizzo;
 	\item[Observer] l'interfaccia costruita da Vaadin è fondamentalmente basata sul pattern observer. Al fine di rendere interattive le pagine senza delegare al programmatore il compito di analizzare il comportamento diretto dell'utente nei confronti del browser, esiste uno strato intermedio che si occupa di notificare i click e le interazioni dell'utente ai componenti interessati. Questo permette una gestione più leggera dell'interfaccia, per migliorare performance e organizzazione del codice sottostante. Eventi come i click e i cambi di pagina vengono notificati dai publisher implementati da Vaadin e vengono ascoltati dai subscriber inseriti durante la creazione dei componenti interattivi delle pagine, i \emph{listener} (per esempio \emph{click listener}), oppure dalla logica intrinseca di Spring Web (ad esempio per il cambio di pagina). Altri esempi sono l'implementazione di \verb!BeforeEnterObserver! nell'interfaccia per il login o l'\verb!@EventListener! utilizzato nella classe \verb!SVeSE! per effettuare operazioni di inizializzazione appena ricevuta la notifica di avvenuto avvio da parte di Spring Boot.
 	\item[Service] numerose classi service vengono usate dai framework utilizzati, in aggiunta alle quali alcune sono state costruite specificamente per il sistema SVeSE, specificamente nel pacchetto \verb!security!: la classe \verb!SVeSEUserDetailsService! consiste in un'implementazione dell'interfaccia \verb!UserDetailsService!, usata da Spring Security nell'operazione di login per recuperare i dati sull'utente che viene autenticato; la classe \verb!SecurityService! consiste in una serie di metodi di utility per interagire con la sessione web (per esempio per il logout);
 	\item[Adapter] la configurazione della sicurezza web è operata dalla classe \verb!SecurityConfig!, che implementa l'adattatore tra Vaadin e Spring \verb!VaadinWebSecurityConfigurerAdapter!, il cui semplifica le chiamate ai metodi delegandole poi a chiamate di Spring Security;
@@ -150,48 +150,54 @@ La seconda linea guida è stata una scelta di stile dell'interfaccia, in modo ch
 Per migliorare l'accessibilità sono stati integrati anche alcuni pop-up di conferma (vedi fig. \ref{screeenshot:newsessionconfirm}) per confermare le operazioni più importanti.
 \begin{figure}
 	\centering
-	\includegraphics[width=0.5\textwidth]{img/gui/newSessionConfirm.png}
+	\includegraphics[width=0.4\textwidth]{img/gui/newSessionConfirm.png}
 	\caption{Pop-up di conferma nella creazione di una nuova sessione}
 	\label{screeenshot:newsessionconfirm}
 \end{figure}
 
 \subsection{Barra di navigazione}
-In ogni interfaccia è presente una barra di navigazione collocata nella parte altra dello schermo: essa permette di navigare tra le varie tab dell'applicazione con facilità, ed è customizzata in base al ruolo dell'utente loggato nell'applicazione. 
-Nel caso in cui l'applicazione sia utilizzata dall'admin, all'interno della barra di navigazione sono presenti i riferimenti alle viste utilizzabili dall'amministratore di sessione mentre invece nel caso in cui sia un garante ad essere loggato, la barra è diversa (vedi fig. \ref{screenshot:mainview}).
+In ogni interfaccia è presente una barra di navigazione collocata nella parte altra dello schermo: essa permette di navigare tra le varie tab dell'applicazione con facilità, ed è personalizzata in base al ruolo dell'utente autenticato. 
+Nel caso in cui l'applicazione sia utilizzata dall'Amministratore, all'interno della barra di navigazione sono presenti i riferimenti alle viste utilizzabili dallo stesso, mentre nel caso in cui sia autenticato un garante la barra appare diversa (fig. \ref{screenshot:mainview}).
 \begin{figure}
 	\centering
-	\includegraphics[width=0.45\textwidth]{img/gui/adminMainView.png}
-	\includegraphics[width=0.45\textwidth]{img/gui/guarantorsMainView.png}
-	\caption{Barra di navigazione di un admin (sx) e di un garante (dx)}
+	\subfloat[][Barra di navigazione dell'Amministratore]{
+	\includegraphics[width=0.6\textwidth]{img/gui/adminMainView.png}}\\
+	\subfloat[][Barra di navigazione di un Garante]{
+	\includegraphics[width=0.4\textwidth]{img/gui/guarantorsMainView.png}}
+	\caption{Barre di navigazione}
 	\label{screenshot:mainview}
 \end{figure}
 
 \subsection{Login}
-Anche la schermata di login è penstata per essere intuitiva, con un singolo riquadro dove inserire le proprie credenziali, e un messaggio di errore contrassegnato dal colore rosso, per aiutare la comprensione anche a persone con difficoltà nel leggere le scritte (vedi fig. \ref{screenshot:login}
+Anche la schermata di login è pensata per essere intuitiva, con un singolo riquadro dove inserire le proprie credenziali, e un messaggio di errore contrassegnato dal colore rosso, per aiutare la comprensione anche a persone con difficoltà di lettura (fig. \ref{screenshot:login}).
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.4\textwidth]{img/gui/login.png}
-	\includegraphics[width=0.4\textwidth]{img/gui/loginError.png}
-	\caption{Modulo di login all'avvio dell'applicazione e dopo l'inserimento errato delle credenziali}
+	\subfloat[][All'avvio]{
+	\includegraphics[width=0.4\textwidth]{img/gui/login.png}}
+	\subfloat[][Dopo inserimento errato delle credenziali]{
+	\includegraphics[width=0.4\textwidth]{img/gui/loginError.png}}
+	\caption{Modulo di login}
 	\label{screenshot:login}
 \end{figure}
 
 \subsection{Menu di voto}
-I menu di voto possono essere di due tipi, collegati al metodo di voto della scheda. Dopo aver scelto la scheda tramite un bottone, viene mostrata una scelta multipla nel caso in cui il voto da esprimere sia categorico, mentre nel caso in cui il voto sia ordinale, viene proposta una serie di menu a tendina, utilizzabili per selezionare l'ordine (vedi fig \ref{screenshot:vote}).
+I menu di voto possono essere di due tipi, dipendentemente dal metodo di voto della scheda. Dopo aver scelto la scheda tramite un bottone, viene mostrata una scelta multipla nel caso in cui il voto da esprimere sia categorico, mentre nel caso in cui il voto sia ordinale viene proposta una serie di menu a tendina, utilizzabili per selezionare l'ordine (fig. \ref{screenshot:vote}).
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.4\textwidth]{img/gui/categoricalVoting.png}
-	\includegraphics[width=0.4\textwidth]{img/gui/OrdinalVoting.png}
-	\caption{Menu di voto nel caso di una scheda con voto categorico (sx) e con voto ordinale (dx)}
+	\subfloat[][Con voto categorico]{
+	\includegraphics[width=0.35\textwidth]{img/gui/categoricalVoting.png}}
+	\subfloat[][Con voto ordinale]{
+	\includegraphics[width=0.4\textwidth]{img/gui/OrdinalVoting.png}}
+	\caption{Menu di voto}
 	\label{screenshot:vote}
 \end{figure}
 
 \subsection{Creazione di una nuova sessione}
-L'interfaccia più complessa è l'interfaccia per la creazione di una nuova sessione: il motivo è che questa operazione richiede un elevato numero di informazioni, come data di inizio e fine, schede elettorali presenti con relative scelte e metodi\ldots 
-In questo caso però la complessità è un problema ridotto, perchè questa interfaccia è utilizzabile solamente dall'amministratore, che si suppone abbia un buon grado di confidenza con il sistema.
-I vari componenti non hanno bisogno di ulteriore presentazione, perchè sono tutti accompagnati da una casella di testo che ne spiega la funzione (vedi fig \ref{screenshot:newsession}). L'unica nota è che la checkbox "Suboptions", utilizzata per creare schede con \emph{voto categorico con preferenze}, apre un'interfaccia analoga a quella della creazione della scheda principale.
+L'interfaccia più complessa è l'interfaccia per la creazione di una nuova sessione: il motivo è che questa operazione richiede un elevato numero di informazioni, come data di inizio e fine, schede elettorali presenti con relative scelte e metodi.
+In questo caso però la complessità è un problema ridotto, perché questa interfaccia è utilizzabile solamente dall'amministratore, che si suppone abbia un buon grado di confidenza con il sistema.
+I vari componenti non hanno bisogno di ulteriore presentazione, perché sono tutti accompagnati da una casella di testo che ne spiega la funzione (vedi fig \ref{screenshot:newsession}). L'unica nota è che la \emph{checkbox} "Suboptions", utilizzata per creare schede con \emph{voto categorico con preferenze}, apre un'interfaccia analoga a quella della creazione della scheda principale.
 
 \begin{figure}
 	\centering
@@ -201,7 +207,7 @@ I vari componenti non hanno bisogno di ulteriore presentazione, perchè sono tut
 \end{figure}
 
 \subsection{Gestione della sessione}
-L'admin ha accesso anche ad un'interfaccia che consente di operare direttamente sulla sessione, mettendola pronta per essere approvata o forzando lo stop (vedi fig. \ref{screenshot:sessionmanagement}).
+L'admin ha accesso anche ad un'interfaccia che consente di operare direttamente sulla sessione, impostandola come pronta per essere approvata o forzando l'interruzione (fig. \ref{screenshot:sessionmanagement}).
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{img/gui/sessionManagement.png}
@@ -210,7 +216,7 @@ L'admin ha accesso anche ad un'interfaccia che consente di operare direttamente 
 \end{figure}
 
 \subsection{Consultazione risultati}
-L'interfaccia di consultazione dei risultati è anch'essa suddivisa in due modalità, una per le schede con voto categorico, categorico con preferenze e referendum, l'altra per le schede con voto ordinale. (vedi fig. \ref{screenshot:consultresult}). Nel caso del voto categorico con preferenza, è possibile consultare separatamente il voto delle schede secondarie.
+L'interfaccia di consultazione dei risultati è anch'essa suddivisa in due modalità, una per le schede con voto categorico, categorico con preferenze e referendum, l'altra per le schede con voto ordinale (fig. \ref{screenshot:consultresult}). Nel caso del voto categorico con preferenza, è possibile consultare separatamente il voto delle schede secondarie.
 Anche in questo caso per consultare i risultati è sufficiente cliccare sul bottone della scheda corrispondente.
 
 \begin{figure}

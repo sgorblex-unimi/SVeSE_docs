@@ -36,7 +36,7 @@ In questa sezione si raccolgono spunti per possibili sviluppi futuri del progett
 
 \subsection{Modello}
 \begin{description}
-	\item[Gestione dei seggi] si vedano i requisiti funzionali al paragrafo \ref{reqfunz};
+	\item[Gestione dei Seggi Fisici] si vedano i requisiti funzionali al paragrafo \ref{reqfunz}, in aggiunta alla reperibilità dei risultati basati su area geografica;
 	\item[Schede bianche] una modellazione ad-hoc delle schede bianche per le elezioni che le supportano; al momento il supporto è possibile creando un'apposita \verb!Choice!;
 	\item[Supporto alle immagini] a ogni \verb!Choice! può essere associata un'immagine;
 	\item[Stato sessione] meglio distinguere lo stato di sessione non \emph{ready} e sessione conclusa.
@@ -49,14 +49,15 @@ In questa sezione si raccolgono spunti per possibili sviluppi futuri del progett
 	\item[Miglior supporto alle eccezioni] controllare l'input prima di comunicare con il modello oppure fornire output specifico per l'eccezione sollevata;
 	\item[Pagina principale] fornire una pagina di benvenuto invece di proiettare l'utente direttamente nella schermata di voto;
 	\item[Timer di login] forzare il logout di un utente dopo un dato intervallo di tempo;
-	\item[Miglioramenti vari] migliori dialoghi di conferma ed errore, migliore interfaccia di logout, \dots.
+	\item[Accesso all'auditing] rendere visibili i log da parte di Amministratore e Garanti;
+	\item[Miglioramenti vari] dialoghi di conferma ed errore più chiari, migliore interfaccia di logout, \dots.
 \end{description}
 
 
 \subsection{Persistenza}
 \begin{description}
-	\item[persistenza] rendere persistente la sessione nella sua interezza;
-	\item[cache] implementare un sistema di caching dei dati comunemente richiesti e difficili da computare come i risultati; potenzialmente persistente.
+	\item[Persistenza] rendere persistente la sessione nella sua interezza;
+	\item[Cache] implementare un sistema di caching dei dati comunemente richiesti e difficili da computare come i risultati; potenzialmente persistente.
 \end{description}
 
 
