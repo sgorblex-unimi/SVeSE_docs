@@ -84,8 +84,20 @@ Per il testing viene utilizzato il paradigma del test unitario (\emph{unit testi
 
 
 \section{Diagramma delle classi di programma}\label{implclassi}
+Durante la fase di progettazione, è stato deciso di definire in modo formale la struttura delle classi (come riportato nel diagramma delle classi di progetto alla figura \ref{fig:classdiag}) per definire lo scheletro su cui basare l'implementazione del sistema.
+Oltre alla scelta di fornire una struttura rigida, si è deciso anche di non progettare a priori e non fornire vincoli sull'implementazione delle singole classi per due motivi principali.
 
+Il primo riguarda l'agilità nello sviluppo: sfruttando un'infrastruttura rigida, ma con un margine di flessibilità al suo interno, si riesce ad ottenere il vantaggio di una progettazione rigida senza dover rinunciare al vantaggio implementativo dell'adattare il codice all'interno di una classe alle esigenze che derivano dall'implementazione.
+Il secondo riguarda la scelta di utilizzo di alcuni framework necessari per la creazione di un prodotto serio e professionale, quali Spring Security e Vaadin. Nonostante lo studio svolto a priori in modo da avere già le conoscenze base necessarie, l'unico modo per comprendere a pieno l'utilizzo di questi strumenti è inevitabilmente tramite lo sviluppo, e questo non era compatibile con una progettazione approfondita e dettagliata sin dalle prime fasi.
 
+In ogni caso, per permettere una piena comprensione del codice sorgente, all'interno di questa relazione è riportato anche il diagramma delle classi di programma (figura \ref{fig:programclassdiag}), al quale è affidato uno sguardo più implementativo.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=\textwidth]{UML/programclass.eps}
+	\caption{Diagramma delle classi.}
+	\label{fig:programclassdiag}
+\end{figure}
 
 
 \section{Design pattern}\label{pattern}

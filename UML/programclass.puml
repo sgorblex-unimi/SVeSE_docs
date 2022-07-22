@@ -1,0 +1,148 @@
+@startuml
+hide empty members
+scale 300 width
+
+
+class Session{
+	- {static} Session instance
+	- {static} Person admin
+	- SessionParameters param
+	- boolean isRunning
+	- Map<Person, Boolean> approval
+	+ void approve(Person p);
+	+ boolean checkApproval();
+	+ void forceClose();
+	+ SessionParameters getCurrentParameters();
+	+ List<Person> getGuarantors();
+	+ List<VotingPaper> getPapers();
+	+ {static} Collection<Role> getRoles();
+	+ {static} Session getSession();
+	+ long howManyEligible(VoteDecider decider);
+	+ {static} void initializeSession(SessionParameters params, List<Person> guarantors);
+	+ boolean isReady();
+	+ {static} boolean isRunning();
+	+ {static} void setAdmin();
+	+ void setReady();
+}
+class SessionParameters{
+	- LocalDateTime start
+	- LocalDateTime end
+	- List<VotingPaper> papers
+	__
+	+ Getter() e Setter()
+	+ void addPaper(VotingPaper p);
+	- SessionParameters(start, end, papers) // Copy Constructor
+	+ SessionParameters copy()
+
+}
+SessionParameters "1" *-- "n" VotingPaper
+Session -- SessionParameters
+
+interface VoteDecider{
+	+ boolean canVote(Person P);
+}
+class AdultDecider{
+	+ AdultDecider(int threshold);
+	+ AdultDecider(); // Default threshold: 18
+	+ boolean canVote(Person p);
+}
+
+interface Vote {
+	+ int getValue(Choice c);
+	+ ElectionMethod getMethod();
+}
+class CategoricalVote {
+	- Choice chosen
+	+ int getValue(Choice c);
+	+ ElectionMethod getMethod();
+}
+class OrdinalVote {
+	- List<Choice> order
+	+ int getValue(Choice c);
+	+ ElectionMethod getMethod();
+}
+class PreferencedVote{
+	- Choice chosen
+	+ int getValue(Choice c);
+	+ ElectionMethod getMethod();
+}
+class ReferendumVote{
+	- Choice chosen
+	+ int getValue(Choice c);
+	+ ElectionMethod getMethod();
+}
+
+VoteDecider <|-- AdultDecider
+Vote <|-- CategoricalVote
+Vote <|-- OrdinalVote
+CategoricalVote <|-- PreferencedVote
+Vote <|-l- ReferendumVote
+
+class VotingPaper {
+	- String title
+	- Map<Choice, VotingPaper> choices
+	- List<Vote> votes
+	- boolean isRunning
+	- ElectionMethod method
+	- VoteDecider decider
+	+ Getter() e Setter()
+	+ boolean canVote(Person p);
+	+ void close();
+	+ VotingPaper getSubpaper(Choice c);
+	+ void addVote(Vote v);
+	+ Result getResults();
+	+ double getTurnout();
+	+ int getTotalVotes();
+	+ long getScore(Choice c);
+	+ double getRelativeScore(Choice c);
+	+ Metodi di gestione come copy() e iterator()
+
+}
+class Results{
+	- SortedSet<Result> allResult
+	- long totalVote
+	- Results()
+}
+class Result{
+	- Choice c;
+	- long score;
+	+ Choice getChoice();
+	+ long getScore();
+	+ double getRelativeScore();
+}
+enum ElectionMethod {
+	ORDINAL
+	PREFERENCED
+	CATEGORICAL
+	REFERENDUM
+}
+class Choice{
+	- String name
+	+ Choice(String name)
+	+ String getName()
+}
+VotingPaper -- VoteDecider 
+VotingPaper -r- Results
+Results o-- Result
+VotingPaper "1" o-- "n" Vote
+VotingPaper "1" *-l- "n" Choice
+VotingPaper -l- ElectionMethod
+
+class Person {
+	- String ssn
+	- String firstName
+	- String lastName
+	- LocalDate birthDate
+	- String birthPlace
+	- boolean enabled
+	- String pwHash
+	+ Getter() e Setter()
+}
+Session "1" o-- "n" Person : Garanti
+
+' class ResponsabileSeggio
+' class Seggio
+' Person <|-- ResponsabileSeggio
+' Seggio "1" o-- "n" ResponsabileSeggio
+
+@enduml

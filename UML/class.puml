@@ -1,131 +1,42 @@
 @startuml
-'left to right direction
+hide empty members
+scale 300 width
 
-'classe del main
-class Server {
-	{field} db: DataBase
-	{method} registraVoto(...)
-	{method} inviaDatiSessione(...)
-	{method} [metodi di risposta alle richieste]
-	{method} vota()
-	{method} attivaPostazione()
-	{method} accettaSuffragio()
-	{method} creaSessione() 
-	{method} startSessione()
-	{method} stopSessione()
-	{method} endSessione()
-	{method} accettaParametriSessione()
-	{method} approvaAzioneAmministratore()
-	{method} approvaAzioneAmministratore()
-	' #############################################################
-	{method} spoglio(...)
-}
 
-'classe del main
-class Client {
-	{field} versione: int
-	{field} sessione: Sessione
-	{field} utente: Utente
-	{field} modalità: Modalità
-	{field} autenticatore: Authenticator
-	' imposta il server e predispone l'interfaccia (pronta per l'autenticazione)
-	{method} setup(...)
-	' imposta utente e modalità dopo aver verificato l'identità della persona e eventualmente le credenziali di utente privilegiato
-	{method} autentica(...)
-	{method} logout(...)
-	{method} esci(...)
+class Session
+class SessionParameters
+SessionParameters "1" *-- "n" VotingPaper
+Session -- SessionParameters
 
-	{method} vota()
-	{method} attivaPostazione()
-	{method} accettaSuffragio()
-	{method} mostraLog()
-	{method} creaSessione() 
-	{method} startSessione()
-	{method} stopSessione()
-	{method} endSessione()
-	{method} accettaParametriSessione()
-	{method} approvaAzioneAmministratore()
-}
-Server "1" -- "*" Client
+interface VoteDecider
+class AdultDecider
 
-class Authenticator {
-	{field} serverAutenticazione
-	{method} autentica()
-	{method} autenticaGarante()
-	{method} autenticaAmministratore()
-	{method} autentica()
-	{method} autenticaResponsabile()
-}
-Authenticator --> Client
+interface Vote
+class CategoricalVote 
+class OrdinalVote
+class PreferencedVote
+class ReferendumVote
 
-class SessioneDiVoto {
-	URL: URL
-	dataInizio
-	dataFine
-	nome
-	id
-	descrizione
-	garanti
-}
-SessioneDiVoto "1" <--> "*" Garante
+VoteDecider <|-- AdultDecider
+Vote <|-- CategoricalVote
+Vote <|-- OrdinalVote
+Vote <|-- PreferencedVote
+Vote <|-- ReferendumVote
 
-abstract class Utente {
-	nome: String
-	cognome: String
-	codiceFiscale: String
-	dataDiNascita: Date
-	luogoDiNascita: String
-}
-Client "1" --> "*" Utente
+class VotingPaper
+enum ElectionMethod
+class Choice
+VotingPaper -- VoteDecider 
+VotingPaper "1" o-- "n" Vote
+VotingPaper "1" *-- "n" Choice
+VotingPaper -- ElectionMethod
 
-class Votante extends Utente {
-	votato: boolean
-	{method} vota(...)
-}
+class Person
+Session "1" o-- "n" Person : Garanti
 
-class Seggio {
-	ID
-	indirizzo
-}
-
-class ResponsabileDiSeggio extends Utente {
-	seggio: Seggio
-	{method} attivaPostazione(...)
-	{method} accettaSuffragio(...)
-}
-ResponsabileDiSeggio --> Seggio
-
-abstract class Supervisore extends Utente {
-	{method} mostraLog(...)
-}
-
-class AmministratoreSessioneVoto extends Supervisore {
-	{method} creaSessione(...)
-	{method} startSessione(...)
-	{method} stopSessione(...)
-	{method} endSessione(...)
-}
-AmministratoreSessioneVoto --> SessioneDiVoto
-
-class Garante extends Supervisore {
-	'classe Ente?
-	nomeEnte: String
-	{method} accettaParametriSessione(...)
-	{method} approvaAzioneAmministratore(...)
-}
-
-class Voto {
-	preferenzeEspresse
-	timstamp: Timestamp
-	seggio: Seggio
-	online: boolean
-	'insieme di preferenze nel caso siano ci siano contemporaneamente più votazioni
-}
-Client "1" --> "*" Voto
-
-class SchedaElettorale {
-	opzioni
-}
-SessioneDiVoto "1" --> "*" SchedaElettorale
+' class ResponsabileSeggio
+' class Seggio
+' Person <|-- ResponsabileSeggio
+' Seggio "1" o-- "n" ResponsabileSeggio
 
 @enduml
