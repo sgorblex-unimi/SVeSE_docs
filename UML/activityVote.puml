@@ -1,0 +1,12 @@
+
+@startuml
+(*) -r-> "Scelta della scheda"
+-r-> "Scelta della preferenza"
+if "Election method == PREFERENCED" then
+	--> "Scelta della preferenza nella scheda sottostante"
+	--> "Conferma della votazione"
+else
+	--> "Conferma della votazione"
+--> (*)
+@enduml
+

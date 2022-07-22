@@ -1,0 +1,14 @@
+@startuml
+(*) -r-> "Scelta titolo"
+-r-> "Scelta del tipo di elezione"
+-r-> "Inserimento scelte possibili"
+if "Election method == PREFERENCED" then
+	--> [=] "Inserimento delle scelte figlie"
+  --> "Selezione dei garanti"
+else
+	--> [!=] "Selezione dei garanti"
+--> "Scelta di ora e data di inizio e fine"
+-l-> "Invio conferma"
+-l-> (*)
+@enduml
+

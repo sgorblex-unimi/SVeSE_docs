@@ -1,0 +1,39 @@
+@startuml
+hide empty description 
+state "No Session Created" as NoSession
+state "Session Created" as SessionCreated{
+	state "Login/Idle" as LoginC
+	state "Session stopped" as SessionStop
+	state "View result" as ViewResult
+	state RoleCheckC <<choice>>
+	state SessionCheck <<choice>>
+
+	[*] --> LoginC
+	LoginC --> RoleCheckC
+	RoleCheckC --> UserLoggedC : role == USER
+	RoleCheckC --> AdminLoggedC : role == ADMIN
+	RoleCheckC --> GuarantorLoggedC : role == GUARANTOR
+	RoleCheckC -l-> LoginC : Wrong Credential
+
+	UserLoggedC --> SessionCheck : Vote
+	SessionCheck --> Vote : Session is running
+	SessionCheck --> UserLoggedC : Session is not running
+
+	state timeChecker <<entrypoint>>
+	'expansionoutput and not expansioninput to make graphics better
+	state "Guarantors approval" as guarantorsApproved <<expansionoutput>>
+	state join_state <<join>>
+	state "Session started" as StartSession
+	timeChecker -d-> join_state
+	guarantorsApproved -u-> join_state
+	join_state -l-> StartSession
+
+	AdminLoggedC --> SessionStop
+	SessionStop --> ViewResult
+
+	state SessionResultCheck <<choice>>
+	GuarantorLoggedC --> SessionResultCheck : Vote
+	SessionResultCheck --> GuarantorLoggedC : Session is running
+	SessionResultCheck --> ViewResult : Session is not running
+	ViewResult --> NoSession
+@enduml
