@@ -136,7 +136,75 @@ L'attenzione ai principi GRASP (\emph{General Responsibility Assignment Software
 
 \section{Interfaccia grafica}\label{gui}
 
+\subsection{Introduzione e linee guida}
+Nello studio delle scelte da prendere per quanto riguarda la progettazione dell'interfaccia grafica, è stato fatto riferimento al documento ministeriale. Citando testualmente l'Art.2 Comma 2: \emph{"Il sistema di voto elettronico dovrebbe basarsi su webapplication, conforme ai requisiti di usabilità e accessibilità previsti dalla legge [...]"}. 
+Per questo motivo, la prima linea guida che ha guidato l'implementazione è stata la decisione di utilizzare un framework che ci permettesse di creare agilmente una webapplication: la scelta finale è stata Vaadin.
+La seconda linea guida è stata una scelta di stile dell'interfaccia, in modo che risultasse il più chiara possibile. Per questo motivo sono stati utilizzanti componenti grafici estremamente semplici (come bottoni e caselle di testo), limitando la complessità dell'interfaccia.
+Per migliorare l'accessibilità sono stati integrati anche alcuni pop-up di conferma (vedi fig. \ref{screeenshot:newsessionconfirm}) per confermare le operazioni più importanti.
+\begin{figure}
+	\centering
+	\includegraphics[width=0.5\textwidth]{img/gui/newSessionConfirm.png}
+	\caption{Pop-up di conferma nella creazione di una nuova sessione}
+	\label{screeenshot:newsessionconfirm}
+\end{figure}
 
+\subsection{Barra di navigazione}
+In ogni interfaccia è presente una barra di navigazione collocata nella parte altra dello schermo: essa permette di navigare tra le varie tab dell'applicazione con facilità, ed è customizzata in base al ruolo dell'utente loggato nell'applicazione. 
+Nel caso in cui l'applicazione sia utilizzata dall'admin, all'interno della barra di navigazione sono presenti i riferimenti alle viste utilizzabili dall'amministratore di sessione mentre invece nel caso in cui sia un garante ad essere loggato, la barra è diversa (vedi fig. \ref{screenshot:mainview}).
+\begin{figure}
+	\centering
+	\includegraphics[width=0.45\textwidth]{img/gui/adminMainView.png}
+	\includegraphics[width=0.45\textwidth]{img/gui/guarantorsMainView.png}
+	\caption{Barra di navigazione di un admin (sx) e di un garante (dx)}
+	\label{screenshot:mainview}
+\end{figure}
+
+\subsection{Login}
+Anche la schermata di login è penstata per essere intuitiva, con un singolo riquadro dove inserire le proprie credenziali, e un messaggio di errore contrassegnato dal colore rosso, per aiutare la comprensione anche a persone con difficoltà nel leggere le scritte (vedi fig. \ref{screenshot:login}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.4\textwidth]{img/gui/login.png}
+	\includegraphics[width=0.4\textwidth]{img/gui/loginError.png}
+	\caption{Modulo di login all'avvio dell'applicazione e dopo l'inserimento errato delle credenziali}
+	\label{screenshot:login}
+\end{figure}
+
+\subsection{Menu di voto}
+I menu di voto possono essere di due tipi, collegati al metodo di voto della scheda. Dopo aver scelto la scheda tramite un bottone, viene mostrata una scelta multipla nel caso in cui il voto da esprimere sia categorico, mentre nel caso in cui il voto sia ordinale, viene proposta una serie di menu a tendina, utilizzabili per selezionare l'ordine (vedi fig \ref{screenshot:vote}).
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.4\textwidth]{img/gui/categoricalVoting.png}
+	\includegraphics[width=0.4\textwidth]{img/gui/OrdinalVoting.png}
+	\caption{Menu di voto nel caso di una scheda con voto categorico (sx) e con voto ordinale (dx)}
+	\label{screenshot:vote}
+\end{figure}
+
+\subsection{Creazione di una nuova sessione}
+L'interfaccia più complessa è l'interfaccia per la creazione di una nuova sessione: il motivo è che questa operazione richiede un elevato numero di informazioni, come data di inizio e fine, schede elettorali presenti con relative scelte e metodi\ldots 
+In questo caso però la complessità è un problema ridotto, perchè questa interfaccia è utilizzabile solamente dall'amministratore, che si suppone abbia un buon grado di confidenza con il sistema.
+I vari componenti non hanno bisogno di ulteriore presentazione, perchè sono tutti accompagnati da una casella di testo che ne spiega la funzione (vedi fig \ref{screenshot:newsession}). L'unica nota è che la checkbox "Suboptions", utilizzata per creare schede con \emph{voto categorico con preferenze}, apre un'interfaccia analoga a quella della creazione della scheda principale.
+
+\begin{figure}
+	\centering
+	\includegraphics[height=0.8\textwidth, angle=90]{img/gui/newSession.png}
+	\caption{Interfaccia per la creazione di una nuova sessione di voto}
+	\label{screenshot:newsession}
+\end{figure}
+
+\subsection{Consultazione risultati}
+L'interfaccia di consultazione dei risultati è anch'essa suddivisa in due modalità, una per le schede con voto categorico, categorico con preferenze e referendum, l'altra per le schede con voto ordinale. (vedi fig. \ref{screenshot:consultresult}). Nel caso del voto categorico con preferenza, è possibile consultare separatamente il voto delle schede secondarie.
+Anche in questo caso per consultare i risultati è sufficiente cliccare sul bottone della scheda corrispondente.
+
+\begin{figure}
+	\centering
+	\includegraphics[height=0.3\textwidth]{img/gui/consultResult.png}
+	\includegraphics[height=0.3\textwidth]{img/gui/consultResultOrdinal.png}
+	\includegraphics[height=0.4\textwidth]{img/gui/consultResultPreferenced.png}
+	\caption{Interfaccia per la consultazione dei risultati di una sessione di voto}
+	\label{screenshot:consultresult}
+\end{figure}
 
 
 \section{Persistenza dei dati}\label{db}
