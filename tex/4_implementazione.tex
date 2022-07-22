@@ -14,6 +14,65 @@ Le operazioni di compilazione, installazione, esecuzione, soluzione delle dipend
 
 
 \section{Vincoli}\label{vincoli}
+Per i vincoli sul mantenimento della correttezza della rappresentazioni delle classi, si è scelto di usare un metodo equivalente ai vincoli OCL, ma moderno e più funzionale, e che ha un meccanismo di controllo simile a quello di JML. Questo metodo ha delle forti basi teoriche ed è stato introdotto da Barbara Liskov in \emph{Program Development in Java} con il concetto di invariante di rappresentazione: una funzione che restituisce un booleano corrispondente al valore di correttezza dello stato corrente della classe. Questa funzione viene effettivamente implementata nel linguaggio nei metodi \verb!repOk! (\emph{representation ok}) delle varie classi. Con le versioni successive di Java, il metodo ha raggiunto la sua vera potenzialità grazie al meccanismo delle asserzioni: se attivate a runtime (come impostazione della JVM), queste verificano la verità di un booleano e, se falso, sollevano un \verb!AssertionError!. Il metodo consiste quindi in asserire, dopo ogni modifica allo stato dell'istanza (e dopo la costruzione), il valore di \verb!repOk!. Questo permette di controllare in modo automatico, durante l'utilizzo proprio del sistema oppure il testing, che l'invariante rimanga intatto. Alle figure \ref{OCL-VP} (OCL), \ref{JML-VP} (JML), \ref{repOk-VP} (repOk) è rappresentata l'equivalenza dei tre metodi, per il caso rappresentativo della classe \verb!VotingPaper!. I metodi \verb!repOk! sono stati implementati nella branch \emph{constraints}.
+
+\begin{figure}
+	\centering
+	\begin{verbatim}
+context VotingPaper inf:
+title<>null and choices<>null and votes<>null and method<>null and hasVoted<>null
+and
+(method<>ElectionMethod.PREDERENCED implies choices.values()->forAll(sub|sub<>null))
+and
+votes->forAll(v|v.getMethod()=method)
+and
+hasVoted->forAll(p|p.canVote()=false)
+and
+hasVoted->Size()=votes->Size()
+        \end{verbatim}
+	\caption{OCL di invariante per VotingPaper}\label{OCL-VP}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{verbatim}
+/@ invariant
+title != null && choices != null && votes != null
+                     && method != null && hasVoted != null
+&& (\forall VotingPaper sub; choices.values().contains(sub);
+        method==ElectionMethod.PREFERENCED ==> sub != null)
+&& (\forall Votes v; vote.contains(sub);
+        v.getMethod() == method)
+&& (\forall Person p; hasVoted.contains(p);
+        p.cantVote() == false)
+&& hasVoted.size() == votes.size();
+@/
+        \end{verbatim}
+	\caption{JML di invariante per VotingPaper}\label{JML-VP}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{verbatim}
+boolean repOk() {
+        if (title == null && choices == null && votes == null
+                             && method == null && hasVoted == null)
+                return false;
+        if (method != ElectionMethod.PREFERENCED)
+                for (VotingPaper sub : choices.values())
+                        if (sub != null)
+                                return false;
+        for (Vote v : votes)
+                if (v.getMethod() != method)
+                        return false;
+        for (Person p : hasVoted)
+                if (!canVote(p))
+                        return false;
+        return hasVoted.size() == votes.size();
+}
+        \end{verbatim}
+	\caption{repOk per VotingPaper}\label{repOk-VP}
+\end{figure}
 
 
 
@@ -39,10 +98,10 @@ L'utilizzo dei design pattern è massiccio sia nel codice del sistema in sé, si
 	\item[Model-View-Controller (MVC)] i pacchetti \verb!model! e \verb!view! consistono nelle omonime componenti del design pattern; la parte di controller è in parte codificata nella logica sia di \verb!model! sia di \verb!view!, in parte è astratta dall'utilizzo dei framework Vaadin e Spring. Tali framework sono infatti pesantamente fondati sul pattern MVC;
 	\item[Data Access Object (DAO)] l'utilizzo della libreria di Spring Data JPA permette di astrarre le classi DAO usate dietro le quinte, tuttavia una loro versione astratta rimane nelle interfacce che estendono \verb!JpaRepository!, che consistono proprio in una serie di operazioni sui dati persistenti che vengono poi implementate automaticamente e fornite agli utilizzatori tramite l'annotazione \verb!@Autowired!. Anche la libreria Hibernate contribuisce all'implementazione dei DAO costruendo query ottimizzate per il database in utilizzo;
 	\item[Observer] l'interfaccia costruita da Vaadin è fondamentalmente basata sul pattern observer. Al fine di rendere interattive le pagine senza delegare al programmatore il compito di analizzare il comportamento diretto dell'utente nei confronti del browser, esiste uno strato intermedio che si occupa di notificare i click e le interazioni dell'utente ai componenti interessati. Questo permette una gestione più leggera dell'interfaccia, per migliorare performance e organizzazione del codice sottostante. Eventi come i click e i cambi di pagina vengono notificati dai publisher implementati da Vaadin e vengono ascoltati dai subscriber inseriti durante la creazione dei componenti interattivi delle pagine, i \emph{listener} (per esempio \emph{click listener}), oppure dalla logica intrinseca di Spring Web (ad esempio per il cambio di pagina). Altri esempi sono l'implementazione di \verb!BeforeEnterObserver! nell'interfaccia per il login o l'\verb!@EventListener! utilizzato nella classe \verb!SVeSE! per effettuare operazioni di inizializzazione appena ricevuta la notifica di avvenuto avvio da parte di Spring Boot.
-\item[Service] numerose classi service vengono usate dai framework utilizzati, in aggiunta alle quali alcune sono state costruite specificamente per il sistema SVeSE, specificamente nel pacchetto \verb!security!: la classe \verb!SVeSEUserDetailsService! consiste in un'implementazione dell'interfaccia \verb!UserDetailsService!, usata da Spring Security nell'operazione di login per recuperare i dati sull'utente che viene autenticato; la classe \verb!SecurityService! consiste in una serie di metodi di utility per interagire con la sessione web (per esempio per il logout);
-\item[Adapter] la configurazione della sicurezza web è operata dalla classe \verb!SecurityConfig!, che implementa l'adattatore tra Vaadin e Spring \verb!VaadinWebSecurityConfigurerAdapter!, il cui semplifica le chiamate ai metodi delegandole poi a chiamate di Spring Security;
-\item[Strategy] nel modello, a ogni scheda elettorale è associato un \verb!VoteDecider!, un'interfaccia che si compone di un metodo \verb!canVote! dedicato a discriminare chi ha diritto al voto per la scheda associata. Questa interfaccia implementa il design pattern strategy, dal momento che il diritto di voto della persona può essere determinato da qualunque suo dato, a seconda delle implementazioni dell'interfaccia stessa;
-\item[Iterator] alcune classi del modello implementano l'interfaccia \verb!Iterable!, cioè forniscono un \verb!Iterator!: la scheda elettorale (\verb!VotingPaper!) permette di iterare tra le possibili scelte che essa contiene; la classe \verb!Results! permette di iterare tra i risultati delle singole scelte (\verb!Result!). È comunque molto comune l'utilizzo degli \verb!Iterator!, inclusi quelli forniti dalla libreria standard di Java.
+	\item[Service] numerose classi service vengono usate dai framework utilizzati, in aggiunta alle quali alcune sono state costruite specificamente per il sistema SVeSE, specificamente nel pacchetto \verb!security!: la classe \verb!SVeSEUserDetailsService! consiste in un'implementazione dell'interfaccia \verb!UserDetailsService!, usata da Spring Security nell'operazione di login per recuperare i dati sull'utente che viene autenticato; la classe \verb!SecurityService! consiste in una serie di metodi di utility per interagire con la sessione web (per esempio per il logout);
+	\item[Adapter] la configurazione della sicurezza web è operata dalla classe \verb!SecurityConfig!, che implementa l'adattatore tra Vaadin e Spring \verb!VaadinWebSecurityConfigurerAdapter!, il cui semplifica le chiamate ai metodi delegandole poi a chiamate di Spring Security;
+	\item[Strategy] nel modello, a ogni scheda elettorale è associato un \verb!VoteDecider!, un'interfaccia che si compone di un metodo \verb!canVote! dedicato a discriminare chi ha diritto al voto per la scheda associata. Questa interfaccia implementa il design pattern strategy, dal momento che il diritto di voto della persona può essere determinato da qualunque suo dato, a seconda delle implementazioni dell'interfaccia stessa;
+	\item[Iterator] alcune classi del modello implementano l'interfaccia \verb!Iterable!, cioè forniscono un \verb!Iterator!: la scheda elettorale (\verb!VotingPaper!) permette di iterare tra le possibili scelte che essa contiene; la classe \verb!Results! permette di iterare tra i risultati delle singole scelte (\verb!Result!). È comunque molto comune l'utilizzo degli \verb!Iterator!, inclusi quelli forniti dalla libreria standard di Java.
 \end{description}
 
 
