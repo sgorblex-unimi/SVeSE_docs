@@ -1,0 +1,37 @@
+@startuml
+
+package client-side{
+	node Browser as B
+	actor User as U
+	U -- B
+}
+
+package server-side{
+	node Server
+	database Persistence as P
+	component Model as M
+	component DAO
+	component Security as SS
+	component "Controller (web server)" as C
+
+	Server <.. DAO : <<deploy>>
+	Server <.. SS : <<deploy>>
+	Server <.. M : <<deploy>>
+	Server <.. C : <<deploy>>
+	SS -r- DAO
+	DAO -r- M
+	DAO -- P
+}
+
+cloud Internet as N
+
+N -r- B
+Server -r- N
+
+'node1 -- node2 : label1
+'node1 .. node3 : label2
+'node1 ~~ node4 : label3
+'node1 == node5
+
+@enduml
+
