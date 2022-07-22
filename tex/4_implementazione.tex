@@ -1,5 +1,9 @@
 \chapter{Implementazione del sistema}\label{implementazione}
-% Come introduzione, breve overview delle tecnologie utilizzate
+L'implementazione viene costruita su una serie di framework e librerie di supporto, scelte accuratamente tra le più comuni e potenti usate dalle grandi software house. Il sistema è monolitico e consiste in un'unica applicazione server-side basata su Spring Boot (\url{https://spring.io/projects/spring-boot}). Sia gli amministratori sia gli utenti finali accedono a un'unica istanza del sistema tramite un web browser di propria scelta. In supplemento a tale framework vengono usate le sue estensioni Web, Security e Data (Data JPA) per rendere più facile, leggibile ed efficiente il codice rispettivamente negli ambiti del servlet, della gestione della sessione web e delle credenziali e nella gestione della persistenza. La persistenza è implementata in un database PostgreSQL (si veda il paragrafo \ref{db}) con il supporto della libreria Hibernate. Per quanto riguarda il front-end, l'interfaccia utente viene implementata tramite il framework Vaadin (si veda il paragrafo \ref{gui}). Il sistema comprende file e script di supporto per facilitare il setup all'amministratore di sistema.
+
+Per quanto riguarda la qualità del codice, viene usato un modello \emph{Model, View, Controller} (MVC): model e view risiedono negli omonimi pacchetti Java, mentre il controller è implementato in parte lato model e in parte lato view. L'utilizzo dei design pattern è documentato al paragrafo \ref{pattern}. Il codice è testato tramite piattaforma JUnit (si veda il paragrafo \ref{testing}). Sono inoltre presenti vincoli implementati con \emph{assert}, come spiegato al paragrafo \ref{vincoli}. Viene tenuta traccia delle operazioni del sistema tramite la libreria di logging SLF4J (si veda il paragrafo \ref{logging}).
+
+Le operazioni di compilazione, installazione, esecuzione, soluzione delle dipendenze e in generale di \emph{build} sono gestite dal \emph{build tool} Apache Maven (\url{https://maven.apache.org}). Il progresso del progetto è ovviamente tracciato dal \emph{versioning tool} Git (\url{https://git-scm.com}).
 
 
 
@@ -9,12 +13,12 @@
 
 
 
-\section{Vincoli}
+\section{Vincoli}\label{vincoli}
 
 
 
 
-\section{Testing}
+\section{Testing}\label{testing}
 
 
 
@@ -24,14 +28,19 @@
 
 
 
-\section{Design pattern}
+\section{Design pattern}\label{pattern}
 
 
 
 
-\section{Interfaccia grafica}
+\section{Interfaccia grafica}\label{gui}
 
 
 
 
-\section{Persistenza dei dati}
+\section{Persistenza dei dati}\label{db}
+
+
+
+
+\section{Auditing}\label{logging}
