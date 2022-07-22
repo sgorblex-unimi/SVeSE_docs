@@ -1,12 +1,29 @@
 \chapter{Guida all'utilizzo}
+Il Sistema è in fase prototipale, per cui viene eseguito in modalità debug. L'utilizzo dell'utility script, scritto in POSIX shell, permette di semplificare il procedimento. Il prodotto finale si comporrebbe essenzialmente di un archivio \verb!jar! pronto all'esecuzione.
 
 
 
 
 \section{Istruzioni per l'installazione}
+\begin{itemize}
+\item installare l'ultima versione di Java
+\item installare l'ultima versione di PostgreSQL
+\item clonare la repository del Sistema
+\end{itemize}
 
 
 
 
 \section{Istruzioni per l'esecuzione}
-% TODO: Inserire credenziali dei vari utenti
+Si tenga conto che la creazione del percorso \verb!/run/postgresql! potrebbe richiedere i permessi di root.
+
+\subsection{Primo avvio}
+Si tenga conto che per il reperimento delle dipendenze e la compilazione delle librerie grafiche di Vaadin il primo avvio potrebbe richiedere parecchi minuti.
+\begin{itemize}
+	\item inizializzare il database con l'utility script: \verb!./SVeSE.sh build-db!;
+	\item eseguire una prima volta il sistema con l'utility script: \verb!./SVeSE.sh run!, quindi interromperlo con il segnale di sistema SIGINT (tipicamente consistente nel premere la combinazione di tasti CTRL+C);
+	\item popolare il database delle persone per il login: \verb!./SVeSE.sh run-sql FILENAME.sql!. Ai fini di test è possibile utilizzare il dump \verb!example_data.sql! fornito nella repository;
+\end{itemize}
+
+\subsection{Avvio normale}
+Una volta effettuata la procedura di inizializzazione al primo avvio, per ogni avvio è sufficiente eseguire \verb!./SVeSE.sh run! e accedere alla pagina web \url{localhost:8080}.
