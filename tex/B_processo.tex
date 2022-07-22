@@ -25,3 +25,67 @@ In questa sezione sono raccolti i compiti svolti da ciascun membro, divisi per a
 \begin{description}
 	\item[Implementazione] view e view-side controller.
 \end{description}
+
+
+
+
+\section{Sviluppi futuri}
+In questa sezione si raccolgono spunti per possibili sviluppi futuri del progetto SVeSE.
+
+
+\subsection{Modello}
+\begin{description}
+	\item[Gestione dei seggi] si vedano i requisiti funzionali al paragrafo \ref{reqfunz};
+	\item[Schede bianche] una modellazione ad-hoc delle schede bianche per le elezioni che le supportano; al momento il supporto è possibile creando un'apposita \verb!Choice!;
+	\item[Supporto alle immagini] a ogni \verb!Choice! può essere associata un'immagine;
+	\item[Stato sessione] meglio distinguere lo stato di sessione non \emph{ready} e sessione conclusa.
+\end{description}
+
+
+\subsection{Interfaccia web}
+\begin{description}
+	\item[Schede elettorali multiple] il supporto grafico per sessioni di più di una scheda elettorale, già supportate dal modello;
+	\item[Miglior supporto alle eccezioni] controllare l'input prima di comunicare con il modello oppure fornire output specifico per l'eccezione sollevata;
+	\item[Pagina principale] fornire una pagina di benvenuto invece di proiettare l'utente direttamente nella schermata di voto;
+	\item[Timer di login] forzare il logout di un utente dopo un dato intervallo di tempo;
+	\item[Miglioramenti vari] migliori dialoghi di conferma ed errore, migliore interfaccia di logout, \dots.
+\end{description}
+
+
+\subsection{Persistenza}
+\begin{description}
+	\item[persistenza] rendere persistente la sessione nella sua interezza;
+	\item[cache] implementare un sistema di caching dei dati comunemente richiesti e difficili da computare come i risultati; potenzialmente persistente.
+\end{description}
+
+
+
+
+\section{Tecnologie utilizzate}
+
+
+\subsection{Framework e librerie}
+\begin{itemize}
+	\item Hibernate
+	\item JUnit
+	\item SLF4J
+	\item Spring Boot
+	\item Spring Data JPA
+	\item Spring Security
+	\item Spring Web
+	\item Vaadin
+\end{itemize}
+
+
+\subsection{Software}
+\begin{description}
+	\item[Interpreti/linguaggi] Java, sh
+	\item[Build tool] Maven
+	\item[Database] PostgreSQL
+	\item[UML] PlantUML (\url{https://plantuml.com})
+	\item[Version control] Git + GitKiss (\url{https://github.com/sgorblex/GitKiss})
+	\item[Stesura relazione] \LaTeX
+	\item[Editor] Neovim con Java LSP (Language Server Protocol)
+	\item[Browser] Firefox (testato anche su Chromium)
+	\item[Sistemi operativi] Arch Linux
+\end{description}
