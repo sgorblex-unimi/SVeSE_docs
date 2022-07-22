@@ -1,0 +1,19 @@
+@startuml
+
+[MODEL\nSession (and other model classes)] as S
+[User] as U
+[Persistence] as P
+[CONTROLLER\nWebserver] as WS
+[Security] as SS
+
+WS -0)- SS : Access Control
+
+() "Persistent data\naccess (with DAO)" as PDA
+S --> PDA : use
+SS --> PDA : use
+P - PDA : provide
+	
+U -(0-> WS : Web GUI (VIEW)
+
+WS -0)- S : "Data Access"
+@enduml
