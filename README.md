@@ -14,5 +14,10 @@ Il `latexmkrc` scritto ad-hoc compilerà automaticamente l'UML in grafica vettor
 
 
 
+## Licenza
+[LPPL](https://www.latex-project.org/lppl)
+
+
+
 ## Contribuzione
 Correzioni di errori e integrazioni sono ben accette via [issue](https://github.com/sgorblex-unimi/SVeSE_docs/issues) o [pull request](https://github.com/sgorblex-unimi/SVeSE_docs/fork). Sarebbe opportuno che eventuali grosse aggiunte al progetto (da parte nostra o di contribuzione esterna) venissero documentate nella relazione, ma questo non è un requisito stretto.
